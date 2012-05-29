@@ -1,0 +1,11 @@
+<!DOCTYPE vocabulary SYSTEM "voca.dtd">
+[
+<!ELEMENT card (word,transcript,translation)>
+<!ATTLIST card date CDATA #REQUIRED
+	count CDATA #IMPLIED>
+<!ELEMENT word (#PCDATA)>
+<!ATTLIST word	lang  (en|ru) 'en' #REQUIRED>
+<!ELEMENT transcript (#PCDATA)>
+<!ELEMENT translation (#PCDATA)>
+<!ATTLIST translation lang  (en|ru) 'ru' #REQUIRED>
+]>
