@@ -14,6 +14,12 @@ public class Card {
 		transcript = new Transcript();
 		translation = new Translation();
 	}
+	
+	public Card(String wrd, String trc, String trs){
+		word = new Word(wrd);
+		transcript = new Transcript(trc);
+		translation = new Translation(trs);
+	}
 
 	public String getWord() {
 		return word.getWord();
@@ -46,6 +52,9 @@ public class Card {
 		myCard.setTranslation("Бог");
 		System.out.println(myCard.getWord() + " " + myCard.getTranscript()
 				+ " " + myCard.getTranslation());
+		Card myCard2 = new Card("hub","Hab","концентратор, или место сборки");
+		System.out.println(myCard2.getWord() + " " + myCard2.getTranscript()
+				+ " " + myCard2.getTranslation());
 	}
 
 }
