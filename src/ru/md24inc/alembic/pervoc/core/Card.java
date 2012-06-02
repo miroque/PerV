@@ -53,8 +53,8 @@ public class Card {
 		System.out.println(myCard.getWord() + " " + myCard.getTranscript()
 				+ " " + myCard.getTranslation());
 		Card myCard2 = new Card("hub","Hab","концентратор, или место сборки");
-		System.out.println(myCard2.getWord() + " " + myCard2.getTranscript()
-				+ " " + myCard2.getTranslation());
+		System.out.println(myCard2.getWord() + " - [" + myCard2.getTranscript()
+				+ "] - " + myCard2.getTranslation());
 	}
 
 }

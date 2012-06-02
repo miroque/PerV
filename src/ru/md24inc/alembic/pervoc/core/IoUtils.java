@@ -1,5 +1,5 @@
 package src.ru.md24inc.alembic.pervoc.core;
-import com.sun.xml.tree.*;
+//import com.sun.xml.tree.*;
 import org.w3c.dom.*;
 import java.io.*;
  
@@ -12,23 +12,23 @@ public class IoUtils {
     public static String fileLocation;
  
     //TABLE META DATA
-    public static final String ROOT_ELEMENT_TAG = “PERSON”;
+    public static final String ROOT_ELEMENT_TAG = "vocabulary";
  
 //
 // Methods
 //
  
      /**
-      Return AddressBook object
-      @return    a AddressBook Object
+      Return Vocabulary object
+      @return    a Vocabulary Object
      */
  
  
-    public static AddressBook getAddressBook(String file){
+    public static Vocabulary getVocabulary(String file){
  
          fileLocation = file;
          //instantiate AddressBook object
-         AddressBook addressBook = new AddressBook();
+         Vocabulary vocaBul = new Vocabulary();
          Person person;
  
          try {
@@ -61,7 +61,7 @@ public class IoUtils {
                    XmlUtils.getValue( row , “COMPANY” ) );
  
                  //add a person to an address book
-                 addressBook.add(person);
+                 vocaBul.add(person);
  
              }//end for
  
@@ -69,13 +69,12 @@ public class IoUtils {
  
          catch ( Exception e ) {
              System.out.println( e );
-             return addressBook;
+             return vocaBul;
          }
  
-         return addressBook;
+         return vocaBul;
  
      }//end method
  
- ….
  
 }//end of IoUtils class
