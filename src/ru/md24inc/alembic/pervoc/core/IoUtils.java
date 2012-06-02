@@ -1,7 +1,15 @@
 package src.ru.md24inc.alembic.pervoc.core;
 //import com.sun.xml.tree.*;
-import org.w3c.dom.*;
-import java.io.*;
+//import org.jdom2.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+//import org.w3c.dom.*;
+//import java.io.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
  
 public class IoUtils {
  
@@ -27,41 +35,52 @@ public class IoUtils {
     public static Vocabulary getVocabulary(String file){
  
          fileLocation = file;
-         //instantiate AddressBook object
+         //instantiate Vocabulary object
          Vocabulary vocaBul = new Vocabulary();
-         Person person;
+         Card card;
  
          try {
             //convert comming file location into input stream
-             InputStream is = new FileInputStream(file);
+        	 //InputStream is = new FileInputStream(file);
  
-             //create xml document
-             Document doc =
-               XmlDocumentBuilder.createXmlDocument(is);
+            //create xml document
+     			//File fXmlFile = new File("d:/workspace/PerVoc/clay/mud.xml");
+     		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+     		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+     		Document doc = dBuilder.parse(file);
+     		doc.getDocumentElement().normalize();
+     		NodeList nList = doc.getElementsByTagName("card");
+     			
+     		//Document doc = XmlDocumentBuilder.createXmlDocument(is);
  
              //get the number of person
-             int size = XmlUtils.getSize(doc , ROOT_ELEMENT_TAG );
+             	//int size = XmlUtils.getSize(doc , ROOT_ELEMENT_TAG );
  
-             for ( int i = 0; i < size; i++ ) {
+             for ( int i = 0; i < nList.getLength(); i++ ) {
  
-                 //instanticate a Person object
-                 person = new Person();
+                 //instanticate a Card object
+                 card = new Card();
  
-                 //get information about a person 
-                 //and set information
-                 Element row =
-                   XmlUtils.getElement(doc , ROOT_ELEMENT_TAG , i);
-                 person.setLastName(
-                   XmlUtils.getValue( row , “LASTNAME” ) );
-                 person.setFirstName(
-                   XmlUtils.getValue( row , “FIRSTNAME” ) );
-                 person.setEmail(
-                   XmlUtils.getValue( row , “EMAIL” ) );
-                 person.setCompany(
-                   XmlUtils.getValue( row , “COMPANY” ) );
+                 //get information about a card and set information
+                 /*Element row = XmlUtils.getElement(doc , ROOT_ELEMENT_TAG , i);
+                 card.setLastName(XmlUtils.getValue( row , “LASTNAME” ) );
+                 card.setFirstName(XmlUtils.getValue( row , “FIRSTNAME” ) );
+                 card.setEmail(XmlUtils.getValue( row , “EMAIL” ) );
+                 card.setCompany(XmlUtils.getValue( row , “COMPANY” ) );*/
+                 
+                 //from another tutorial
+                 Node nNode = nList.item(i);
+                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+       
+      		      Element eElement = (Element) nNode;
+      		      card.setWord(getTagValue(("word"),eElement));
+      		      
+      		      //System.out.println("Word : " + getTagValue("word", eElement));
+                 }
+
  
                  //add a person to an address book
-                 vocaBul.add(person);
+                 vocaBul.add(card);
  
              }//end for
  
@@ -76,5 +95,12 @@ public class IoUtils {
  
      }//end method
  
+         private static String getTagValue(String sTag, Element eElement) {
+        		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+        	 
+        	        Node nValue = (Node) nlList.item(0);
+        	 
+        		return nValue.getNodeValue();
+        	  }
  
 }//end of IoUtils class

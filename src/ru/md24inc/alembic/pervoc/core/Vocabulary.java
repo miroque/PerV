@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Vocabulary {
 	
-	protected List voc = new ArrayList();
+	protected List <Card> voc = new ArrayList<Card>();
 	
 	public void add(Card c){
 		voc.add(c);
