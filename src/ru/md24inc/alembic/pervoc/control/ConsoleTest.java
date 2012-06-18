@@ -9,10 +9,10 @@ public class ConsoleTest {
 
 		// Filling each card with some words and info
 		Card[] myCards = new Card[3];
-		// в целом он понимает утф-8 но консоль то не понимает. а так хорошо
-		myCards[0] = new Card("Test", "S\u00ED Se\u00F1or", "Кракозябра");
-		myCards[1] = new Card("God", "gad", "Бог");
-		myCards[2] = new Card("hub", "Hab", "концентратор, или место сборки");
+		// РґРѕР±Р°РІРёР» СЃРїРµС† СЃРёРјРІРѕР»РѕРІ СѓС‚С„-8
+		myCards[0] = new Card("Test", "S\u00ED Se\u00F1or", "РљСЂР°РєРѕР·СЏР±СЂР°");
+		myCards[1] = new Card("God", "gad", "Р‘РѕРі");
+		myCards[2] = new Card("hub", "Hab", "РљРѕРЅС†РµРЅС‚СЂР°С‚РѕСЂ. РёР»Рё РјРµСЃС‚Рѕ СЃР±РѕСЂРєРё");
 
 		// Inserting cards into vocabulary
 		myVocabulary.add(myCards[0]);
