@@ -4,14 +4,21 @@ import src.ru.md24inc.alembic.pervoc.core.*;
 
 public class ConsoleTest {
 	public static void main(String args[]) {
-		Card myCard = new Card();
-		myCard.setWord("God");
-		myCard.setTranscript("gad");
-		myCard.setTranslation("Бог");
-		System.out.println(myCard.getWord() + " " + myCard.getTranscript()
-				+ " " + myCard.getTranslation());
-		Card myCard2 = new Card("hub", "Hab", "концентратор, или место сборки");
-		System.out.println(myCard2.getWord() + " - [" + myCard2.getTranscript()
-				+ "] - " + myCard2.getTranslation());
+		// Initializing New Vocabular
+		Vocabulary myVocabulary = new Vocabulary();
+
+		// Filling each card with some words and info
+		Card[] myCards = new Card[3];
+		myCards[0] = new Card();
+		myCards[1] = new Card("God", "gad", "Бог");
+		myCards[2] = new Card("hub", "Hab", "концентратор, или место сборки");
+
+		// Inserting cards into vocabulary
+		myVocabulary.add(myCards[0]);
+		myVocabulary.add(myCards[1]);
+		myVocabulary.add(myCards[2]);
+		
+		// Printing Vocabular
+		myVocabulary.printAll();
 	}
 }
