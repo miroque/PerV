@@ -48,28 +48,28 @@ public class PerVoc {
 		mainFrame.setTitle("PerVoc - Personal Vocabulary - ver. 0.1");
 		mainFrame.setBounds(100, 100, 450, 300);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		mainFrame.setJMenuBar(menuBar);
-		
+
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		//Create a file chooser
+		// Create a file chooser
 		fileChooser = new JFileChooser();
-		
+
 		JMenuItem mntmOpenFile = new JMenuItem("Open File ...");
-		
-		//Handle open menu action.
+
+		// Handle open menu action.
 		mntmOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//fc.showOpenDialog(null);
+				// fc.showOpenDialog(null);
 				fileChooser.showOpenDialog(mainFrame);
-				//int returnVal = fc.showOpenDialog(PerVoc.this)
+				// int returnVal = fc.showOpenDialog(PerVoc.this)
 			}
 		});
 		mnFile.add(mntmOpenFile);
-		
+
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

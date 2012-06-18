@@ -10,7 +10,7 @@ public class ConsoleTest {
 		// Filling each card with some words and info
 		Card[] myCards = new Card[3];
 		// в целом он понимает утф-8 но консоль то не понимает. а так хорошо
-		myCards[0] = new Card("Test", "S\u00ED Se\u00F1or", " ракоз€бра"); 
+		myCards[0] = new Card("Test", "S\u00ED Se\u00F1or", " ракоз€бра");
 		myCards[1] = new Card("God", "gad", "Ѕог");
 		myCards[2] = new Card("hub", "Hab", "концентратор, или место сборки");
 
@@ -18,7 +18,7 @@ public class ConsoleTest {
 		myVocabulary.add(myCards[0]);
 		myVocabulary.add(myCards[1]);
 		myVocabulary.add(myCards[2]);
-		
+
 		// Printing Vocabular
 		myVocabulary.printAll();
 	}

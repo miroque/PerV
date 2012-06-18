@@ -72,7 +72,7 @@ public class VocaBull {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
-				//testing with XML
+				// testing with XML
 				String FILE_NAME = "./clay/mud.xml";
 				File file = new File(FILE_NAME);
 				if (!(file.exists() && file.canRead())) {
