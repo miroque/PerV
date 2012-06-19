@@ -30,8 +30,8 @@ public class Vocabulary {
 	public void printAll() {
 		System.out.println("Printing All Cards");
 		for (int i = 0; i < voc.size(); i++) {
-			System.out.println(voc.get(i).getWord() + " ["
-					+ voc.get(i).getTranscript() + "] "
+			System.out.println("\t" + voc.get(i).getWord() + " \t["
+					+ voc.get(i).getTranscript() + "] \t"
 					+ voc.get(i).getTranslation());
 		}
 
