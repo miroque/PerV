@@ -11,32 +11,12 @@ public class ConsoleXML {
 
 	public static void main(String args[]) {
 		// Open XML File
-		openXMLFile(file);
+		
 		// Parcing XML Tree to Java Objects
 		// Printing to System.out with tub
 	}
 
 	public static void openXMLFile(String fileName) {
-		BufferedReader buff = null;
-
-		try {
-			FileReader file = new FileReader(promtToFile());
-			buff = new BufferedReader(file);
-			boolean eof = false;
-			while (!eof) {
-				String line = buff.readLine();
-				if (line == null)
-					eof = true;
-				else
-					// Printing file to console
-					System.out.println(line);
-			}
-		} catch (IOException e) {
-			i = 3;
-			System.out.println("Error -- " + e.getMessage());
-		} finally {
-			buff.close();
-		}
-
+		//Opens xml file, sort of.
 	}
 }
