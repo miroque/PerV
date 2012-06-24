@@ -19,13 +19,13 @@ public class ConsoleXML {
 		SAXBuilder sax = new SAXBuilder();
 		File file = new File(srcOfFile);
 		Document doc = sax.build(file);
-		// Parcing XML Tree, getting Root Element and it's attributes
+		// Parsing XML Tree, getting Root Element and it's attributes
 		Element root = doc.getRootElement();
 		List <Attribute> rootAttrs = root.getAttributes();
 		System.out.println("Root element: " + root.getName());
 		for (Attribute at : rootAttrs) System.out.println("attr: " + at.getName() + " = " + at.getValue());
 		
-		// Parcing XML Tree to Java Objects
+		// Parsing XML Tree to Java Objects
 		// Printing to System.out with tub
 	}
 
