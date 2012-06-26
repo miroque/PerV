@@ -1,9 +1,13 @@
-package src.ru.md24inc.alembic.pervoc.core;
+package src.ru.md24inc.alembic.pervoc.control;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import src.ru.md24inc.alembic.pervoc.core.Card;
+import src.ru.md24inc.alembic.pervoc.core.Vocabulary;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -12,7 +16,7 @@ public class IoUtils {
 	//
 	// Data Members
 	//
-	// xml file location - from user’s input
+	// xml file location - from userï¿½s input
 	public static String fileLocation;
 
 	// TABLE META DATA
