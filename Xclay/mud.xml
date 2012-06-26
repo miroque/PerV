@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><vocabulary>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?><vocabulary>
 	<card count="1" date="08.11.2010">
 		<word lang="en">torque</word>
 		<transcript>tɔːk</transcript>
@@ -14,4 +14,14 @@
 		<transcript>call</transcript>
 		<translation lang="ru">вызов, зов</translation>
 	</card>
-<card date="11.05.2012" id="4"><word>price</word></card><card count="4" date="11.05.2012"><word>price</word></card></vocabulary>
+	<card count="4" date="11.05.2012">
+		<word lang="en">error</word>
+		<transcript>error</transcript>
+		<translation lang="ru">ошибка</translation>
+	</card>
+	<card count="5" date="12.05.2012">
+		<word lang="en">sole</word>
+		<transcript>sole</transcript>
+		<translation lang="ru">не знаю что такое</translation>
+	</card>
+</vocabulary>
