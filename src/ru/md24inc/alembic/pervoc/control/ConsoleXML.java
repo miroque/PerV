@@ -15,6 +15,7 @@ public class ConsoleXML {
 	public final static String srcOfFile = "D:\\workspace\\PerV\\Xclay\\mud.xml";
 
 	public static void main(String args[]) throws JDOMException, IOException {
+		
 		// Open XML File
 		SAXBuilder sax = new SAXBuilder();
 		File file = new File(srcOfFile);
