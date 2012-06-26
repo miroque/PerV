@@ -13,6 +13,7 @@ import src.ru.md24inc.alembic.pervoc.core.*;
 
 public class ConsoleXMLObj {
 	public final static String srcOfFile = "D:\\workspace\\PerV\\Xclay\\mud.xml";
+	public Vocabulary myVoc = new Vocabulary();
 
 	public static void main(String args[]) throws JDOMException, IOException {
 		// Open XML File
@@ -20,22 +21,13 @@ public class ConsoleXMLObj {
 		File file = new File(srcOfFile);
 		Document doc = sax.build(file);
 
-		// Parsing XML Tree, getting Root Element and it's attributes
+		// Parsing XML Tree, getting Root Element
 		Element root = doc.getRootElement();
-		List<Attribute> rootAttrs = root.getAttributes();
-		System.out.println("Root element: " + root.getName());
-		for (Attribute at : rootAttrs)
-			System.out.println("attr: " + at.getName() + " = " + at.getValue());
 
 		// Parsing XML Tree, getting Children Element and it's attributes
-		List<Element> cards = root.getChildren();
-		for (Element card : cards) {
-			System.out.println("\nCard: " + card.getName());
-			List<Attribute> attrs = card.getAttributes();
-			for (Attribute at : attrs)
-				System.out.println(card.getName() + "'s element " + "attr: "
-						+ at.getName() + " = " + at.getValue());
-			parseChild(card);// Our method for parsing child elements
+		List<Element> elements = root.getChildren();
+		for (Element element : elements) {
+			parseChild(element);// Our method for parsing child elements
 		}
 
 		// Parsing XML Tree to Java Objects
@@ -45,8 +37,7 @@ public class ConsoleXMLObj {
 	private static void parseChild(Element element) {
 		List<Element> children = element.getChildren();
 		for (Element child : children) {
-			System.out.println("child: " + child.getName());
-			System.out.println("childValue: " + child.getValue());
+			child.getValue();
 
 			parseChild(child);
 		}
