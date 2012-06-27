@@ -18,14 +18,14 @@ public class ConsoleTest {
 		myCards[5] = new Card("hub", "Hab", "Концентратор. или место сборки");
 
 		// Inserting cards into vocabulary
-		myVocabulary.add(myCards[0]);
-		myVocabulary.add(myCards[1]);
-		myVocabulary.add(myCards[2]);
-		myVocabulary.add(myCards[3]);
-		myVocabulary.add(myCards[4]);
-		myVocabulary.add(myCards[5]);
+		myVocabulary.addCard(myCards[0]);
+		myVocabulary.addCard(myCards[1]);
+		myVocabulary.addCard(myCards[2]);
+		myVocabulary.addCard(myCards[3]);
+		myVocabulary.addCard(myCards[4]);
+		myVocabulary.addCard(myCards[5]);
 
 		// Printing Vocabular
-		myVocabulary.printAll();
+		myVocabulary.printVocabular();
 	}
 }
