@@ -1,10 +1,6 @@
-package src.ru.md24inc.alembic.pervoc.core;
+package ru.md24inc.alembic.pervoc.core;
 
 public class Card {
-	// Не знаю особо зачем эта переменная, но для эксперимента обучения и для
-	// будущего.
-	// возможно потом удалю или еще чего, пока не понял.
-	// public static int cardId;
 	private Word word;
 	private Transcript transcript;
 	private Translation translation;

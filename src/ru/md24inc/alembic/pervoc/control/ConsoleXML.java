@@ -1,4 +1,4 @@
-package src.ru.md24inc.alembic.pervoc.control;
+package ru.md24inc.alembic.pervoc.control;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.List;
 import org.jdom2.*;
 import org.jdom2.input.*;
 
-import src.ru.md24inc.alembic.pervoc.core.*;
+import ru.md24inc.alembic.pervoc.core.*;
 
 public class ConsoleXML {
 	public final static String srcOfFile = "D:\\workspace\\PerV\\Xclay\\mud.xml";

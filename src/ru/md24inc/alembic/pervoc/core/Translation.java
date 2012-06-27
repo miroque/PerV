@@ -1,4 +1,4 @@
-package src.ru.md24inc.alembic.pervoc.core;
+package ru.md24inc.alembic.pervoc.core;
 
 public class Translation {
 	private String translation;

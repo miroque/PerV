@@ -1,4 +1,4 @@
-package src.ru.md24inc.alembic.pervoc.core;
+package ru.md24inc.alembic.pervoc.core;
 
 /**
  * Class Word for making XML to object

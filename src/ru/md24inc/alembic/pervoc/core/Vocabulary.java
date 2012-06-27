@@ -1,4 +1,4 @@
-package src.ru.md24inc.alembic.pervoc.core;
+package ru.md24inc.alembic.pervoc.core;
 
 import java.util.ArrayList;
 import java.util.List;

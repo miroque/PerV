@@ -1,6 +1,6 @@
-package src.ru.md24inc.alembic.pervoc.control;
+package ru.md24inc.alembic.pervoc.control;
 
-import src.ru.md24inc.alembic.pervoc.core.*;
+import ru.md24inc.alembic.pervoc.core.*;
 import java.io.*;
 
 public class ConsoleFileXML {
