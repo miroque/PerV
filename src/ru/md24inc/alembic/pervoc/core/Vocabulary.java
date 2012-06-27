@@ -16,12 +16,12 @@ import org.w3c.dom.NodeList;
  * 
  * @author Alexander Panov
  * 
- * @version 0.1
+ * @version 0.2
  */
 
 public class Vocabulary {
 
-	protected List<Card> voc = new ArrayList<Card>();
+	protected List<Card> voc;
 
 	/**
 	 * Class constructor.
@@ -29,13 +29,14 @@ public class Vocabulary {
 
 	public Vocabulary() {
 		System.out.println("Initial Vocab");
+		voc = new ArrayList<Card>();
 	}
 
-	public void add(Card c) {
+	public void addCard(Card c) {
 		voc.add(c);
 	}
 
-	public void printAll() {
+	public void printVocabular() {
 		System.out.println("Printing All Cards");
 		for (int i = 0; i < voc.size(); i++) {
 			System.out.println("\t" + voc.get(i).getWord() + " \t["
@@ -44,58 +45,49 @@ public class Vocabulary {
 		}
 
 	}
-	// instantiate Vocabulary object
-	Vocabulary vocaBul = new Vocabulary();
-	Card card;
 
-	try {
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory
-				.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(srcOfFile);
-		doc.getDocumentElement().normalize();
-		NodeList nList = doc.getElementsByTagName("card");
-		System.out.println(nList.getLength());
+	public void openXMLFile(String fileName) {
+		Card card;
 
-		for (int i = 0; i < nList.getLength(); i++) {
-			card = new Card();
+		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fileName);
+			doc.getDocumentElement().normalize();
+			NodeList nList = doc.getElementsByTagName("card");
 
-			Node nNode = nList.item(i);
-			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+			for (int i = 0; i < nList.getLength(); i++) {
+				card = new Card();
 
-				Element eElement = (Element) nNode;
-				card.setWord(getTagValue(("word"), eElement));
-				card.setTranscript(getTagValue(("transcript"), eElement));
-				card.setTranslation(getTagValue(("translation"), eElement));
-			}
+				Node nNode = nList.item(i);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
-			// add a person to an address book
-			vocaBul.add(card);
+					Element eElement = (Element) nNode;
+					card.setWord(getTagValue(("word"), eElement));
+					card.setTranscript(getTagValue(("transcript"), eElement));
+					card.setTranslation(getTagValue(("translation"), eElement));
+				}
 
-		}// end for
+				voc.add(card);
+
+			}// end for
+
+		}// end try
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
 
 	}
 
-	catch (Exception e) {
-		System.out.println(e);
+	private static String getTagValue(String sTag, Element eElement) {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
+				.getChildNodes();
+
+		Node nValue = (Node) nlList.item(0);
+
+		return nValue.getNodeValue();
 	}
-	
-	vocaBul.printAll();
-
-}
-
-public static void openXMLFile(String fileName) {
-	// Opens xml file, sort of.
-}
-
-private static String getTagValue(String sTag, Element eElement) {
-	NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
-			.getChildNodes();
-
-	Node nValue = (Node) nlList.item(0);
-
-	return nValue.getNodeValue();
-}
-
 
 }
