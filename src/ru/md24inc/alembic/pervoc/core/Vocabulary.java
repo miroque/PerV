@@ -98,6 +98,15 @@ public class Vocabulary {
 	}
 	
 	/**
+	 * Saves Vocabulary to XML file
+	 * @param fileName String for output XML file
+	 */
+	//TODO Add some kind of Error Exceptions
+	
+	public void saveXMLFile(String fileName) {
+	}
+
+	/**
 	 * Inner Method for getting Value of Node Chiled by it's Name
 	 * @param sTag
 	 * @param eElement
