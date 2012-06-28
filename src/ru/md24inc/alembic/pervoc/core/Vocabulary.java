@@ -31,10 +31,20 @@ public class Vocabulary {
 		System.out.println("Initial Vocab");
 		voc = new ArrayList<Card>();
 	}
+	
+	/**
+	 * Adding a Word Card to list of Cards
+	 * @param card 
+	 */
 
-	public void addCard(Card c) {
-		voc.add(c);
+	public void addCard(Card card) {
+		voc.add(card);
 	}
+	
+	/**
+	 * Printing to console the content of vocabulary
+	 * in tabs columns
+	 */
 
 	public void printVocabular() {
 		System.out.println("Printing All Cards");
@@ -45,6 +55,12 @@ public class Vocabulary {
 		}
 
 	}
+	
+	/**
+	 * Opens XML file of Vocabulary and fills up Vocabulary
+	 * @param fileName String for source XML file
+	 */
+	//TODO Add some kind of Error Exceptions
 
 	public void openXMLFile(String fileName) {
 		Card card;
@@ -80,6 +96,13 @@ public class Vocabulary {
 		}
 
 	}
+	
+	/**
+	 * Inner Method for getting Value of Node Chiled by it's Name
+	 * @param sTag
+	 * @param eElement
+	 * @return the Value of Node
+	 */
 
 	private static String getTagValue(String sTag, Element eElement) {
 		NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
