@@ -114,6 +114,27 @@ public class Vocabulary {
             Element rootElement = doc.createElement("vocabulary");
             doc.appendChild(rootElement);
 
+            //Cycle for adding cards elements goes here
+            //One itteration
+            for (int i = 0; i < voc.size(); i++) {
+
+                //card element
+                Element card = doc.createElement("card");
+                rootElement.appendChild(card);
+                //word element
+                Element word = doc.createElement("word");
+                word.appendChild(doc.createTextNode(voc.get(i).getWord()));
+                card.appendChild(word);
+                //transcript
+                Element transcript = doc.createElement("transcript");
+                transcript.appendChild(doc.createTextNode(voc.get(i).getTranscript()));
+                card.appendChild(transcript);
+                //translation
+                Element translation = doc.createElement("translation");
+                translation.appendChild(doc.createTextNode(voc.get(i).getTranslation()));
+                card.appendChild(translation);
+
+            }
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
