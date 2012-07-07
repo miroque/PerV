@@ -1,9 +1,12 @@
 package ru.md24inc.alembic.pervoc.core;
 
+import java.util.Date;
+
 public class Card {
 	private Word word;
 	private Transcript transcript;
 	private Translation translation;
+        private Date date;
 
 	public Card() {
 		word = new Word();
