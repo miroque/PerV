@@ -13,10 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 /**
  * Class Vocabulary for making XML to object
@@ -121,6 +118,10 @@ public class Vocabulary {
                 //card element
                 Element card = doc.createElement("card");
                 rootElement.appendChild(card);
+                //card.setAttribute("count", Integer.toString(i));
+                Attr attr = doc.createAttribute("count");
+                attr.setValue(Integer.toString(i+1));
+                card.setAttributeNode(attr);
                 //word element
                 Element word = doc.createElement("word");
                 word.appendChild(doc.createTextNode(voc.get(i).getWord()));
@@ -140,17 +141,9 @@ public class Vocabulary {
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(fileName));
-
-            // Output to console for testing
-            // StreamResult result = new StreamResult(System.out);
-
             transformer.transform(source, result);
 
             System.out.println("File saved!");
-
-
-
-
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
