@@ -2,9 +2,9 @@ package ru.md24inc.alembic.pervoc.core;
 
 /**
  * Class Word for making XML to object
- * 
+ *
  * @author Alexander Panov
- * 
+ *
  * @version 0.1
  */
 
@@ -20,7 +20,7 @@ public class Word {
 
 	/**
 	 * Class constructor.
-	 * 
+	 *
 	 * @param word
 	 *            String word to write into Word
 	 */
