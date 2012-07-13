@@ -5,48 +5,55 @@
 package ru.md24inc.alembic.pervoc.control;
 
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.*;
-
 
 /**
  *
  * @author miroque
  */
-public class Pervoc {
+public class Pervoc extends JFrame {
+    // Variables declaration
+    private JMenuBar menuBar;
+    private JMenu menuFile;
+    private JMenu menuViews;
+    
+    /**
+     * Creates new form Pervoc
+     */
+    public Pervoc() {
+        initComponents();
+    }
 
-    private static void initFrame() {
+    private void initComponents() {
         // Creating main frame and giving it title
         // Personal Vocabular with def.action on exit.
-        JFrame frame = new JFrame("Personal Vocabulary (version 0.1)");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Personal Vocabulary (version 0.1)");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Making min. and max sizes.
         Dimension minSize = new Dimension(300, 450);
-        frame.setMinimumSize(minSize);
+        setMinimumSize(minSize);
         //max size not set
-        
+
         //Creating bar for menu
-        JMenuBar menuBar = new JMenuBar();
-        
+        menuBar = new JMenuBar();
+
         //Creating first menu named "File"
-        JMenu menu = new JMenu("File");
-        
-        menuBar.add(menu);
-        
+        menuFile = new JMenu("File");
+
+        menuBar.add(menuFile);
+
         //Creating second menu named "Views"
-        menu = new JMenu("Views");
-        
-        menuBar.add(menu);
-        
-        
+        menuViews = new JMenu("Views");
+
+        menuBar.add(menuViews);
+
+
         // Adding menu bar in our main frame
-        frame.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
 
         //frame.pack();
-        frame.setVisible(true);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -57,7 +64,7 @@ public class Pervoc {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
-                initFrame();
+                new Pervoc().setVisible(true);
             }
         });
     }
