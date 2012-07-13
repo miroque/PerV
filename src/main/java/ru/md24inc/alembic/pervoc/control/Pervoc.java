@@ -16,6 +16,9 @@ public class Pervoc extends JFrame {
     private JMenuBar menuBar;
     private JMenu menuFile;
     private JMenu menuViews;
+    private JMenuItem menuFileOpen;
+    private JMenuItem menuFileQuit;
+    private JMenuItem menuViewsTscript;
     
     /**
      * Creates new form Pervoc
@@ -40,12 +43,24 @@ public class Pervoc extends JFrame {
 
         //Creating first menu named "File"
         menuFile = new JMenu("File");
-
+        menuFileOpen = new JMenuItem("Open...");
+        menuFileOpen.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        menuFile.add(menuFileOpen);
+        menuFile.add(new JPopupMenu.Separator());
+        menuFileQuit = new JMenuItem("Quit");
+        menuFileQuit.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        menuFile.add(menuFileQuit);
+        
+        // Adding menu File to Bar menu
         menuBar.add(menuFile);
 
         //Creating second menu named "Views"
         menuViews = new JMenu("Views");
-
+        menuViewsTscript = new JMenuItem("Transcript");
+        menuViewsTscript.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        menuViews.add(menuViewsTscript);
+        
+        // Adding menu Views to Bar menu
         menuBar.add(menuViews);
 
 
