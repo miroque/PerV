@@ -19,6 +19,8 @@ public class Pervoc extends JFrame {
     private JMenuItem menuFileItemOpen;
     private JMenuItem menuFileItemQuit;
     private JMenuItem menuViewsItemTscript;
+    private JTable tableVoc;
+    private JScrollPane scrollPaneForTableVoc;
     
     /**
      * Creates new form Pervoc
@@ -66,6 +68,16 @@ public class Pervoc extends JFrame {
 
         // Adding menu bar in our main frame
         setJMenuBar(menuBar);
+        
+        //Creating and Adding Table with Vocabulary into main Frame
+        String[] colNames = {"Word","Transcript","Translate"};
+        Object [][] data = {{"dog","-1-1","Собака"},{"table","tablo","стол"}};
+        tableVoc = new JTable(data, colNames);
+        scrollPaneForTableVoc = new JScrollPane(tableVoc);
+        tableVoc.setFillsViewportHeight(true);
+        add(scrollPaneForTableVoc);
+        
+        
 
         //frame.pack();
         setVisible(true);
