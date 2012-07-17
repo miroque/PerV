@@ -3,7 +3,6 @@ package ru.md24inc.alembic.pervoc.dao;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,37 +25,17 @@ import ru.md24inc.alembic.pervoc.core.Card;
  */
 public class Vocabulary {
 
-    protected List<Card> voc;
-
     /**
      * Class constructor.
      */
     public Vocabulary() {
         System.out.println("Initial Vocab");
-        voc = new ArrayList<Card>();
-    }
-
-    /**
-     * Adding a Word Card to list of Cards
-     *
-     * @param card
-     */
-    public void addCard(Card card) {
-        voc.add(card);
-    }
-
-    /**
-     * Temporary wrapper for cards output.
-     * Used as temporary solution during refactoring process.
-     */
-    public void printVocabular() {
-        printVocabular(voc);
     }
 
     /**
      * Printing to console the content of vocabulary in tabs columns
      */
-    public static void printVocabular(Collection<Card> cards) {
+    public void printVocabular(Collection<Card> cards) {
         System.out.println("Printing All Cards");
         for (Card card : cards) {
             System.out.println("\t" + card.getWord() + " \t["
@@ -71,9 +50,8 @@ public class Vocabulary {
      * @param fileName String for source XML file
      */
     //TODO Add some kind of Error Exceptions
-    public void openXMLFile(String fileName) {
-        Card card;
-
+    public Collection<Card> openXMLFile(String fileName) {
+        final Collection<Card> result = new ArrayList<Card>();
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -82,7 +60,7 @@ public class Vocabulary {
             NodeList nList = doc.getElementsByTagName("card");
 
             for (int i = 0; i < nList.getLength(); i++) {
-                card = new Card();
+                final Card card = new Card();
 
                 Node nNode = nList.item(i);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -93,7 +71,7 @@ public class Vocabulary {
                     card.setTranslation(getTagValue(("translation"), eElement));
                 }
 
-                voc.add(card);
+                result.add(card);
 
             }// end for
 
@@ -102,6 +80,7 @@ public class Vocabulary {
             System.out.println(e);
         }
 
+        return result;
     }
 
     /**
@@ -110,7 +89,7 @@ public class Vocabulary {
      * @param fileName String for output XML file
      */
     //TODO Add some kind of Error Exceptions
-    public void saveXMLFile(String fileName) {
+    public void saveXMLFile(String fileName, Collection<Card> cards) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -121,29 +100,31 @@ public class Vocabulary {
             doc.appendChild(rootElement);
 
             //Cycle for adding cards elements goes here
-            //One itteration
-            for (int i = 0; i < voc.size(); i++) {
+            //One iteration
+            int i = 1;
+            for (Card c : cards) {
 
                 //card element
                 Element card = doc.createElement("card");
                 rootElement.appendChild(card);
                 //card.setAttribute("count", Integer.toString(i));
                 Attr attr = doc.createAttribute("count");
-                attr.setValue(Integer.toString(i+1));
+                attr.setValue(Integer.toString(i));
                 card.setAttributeNode(attr);
                 //word element
                 Element word = doc.createElement("word");
-                word.appendChild(doc.createTextNode(voc.get(i).getWord()));
+                word.appendChild(doc.createTextNode(c.getWord()));
                 card.appendChild(word);
                 //transcript
                 Element transcript = doc.createElement("transcript");
-                transcript.appendChild(doc.createTextNode(voc.get(i).getTranscript()));
+                transcript.appendChild(doc.createTextNode(c.getTranscript()));
                 card.appendChild(transcript);
                 //translation
                 Element translation = doc.createElement("translation");
-                translation.appendChild(doc.createTextNode(voc.get(i).getTranslation()));
+                translation.appendChild(doc.createTextNode(c.getTranslation()));
                 card.appendChild(translation);
 
+                i++;
             }
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -168,10 +149,7 @@ public class Vocabulary {
      * @return the Value of Node
      */
     private static String getTagValue(String sTag, Element eElement) {
-        NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
-
-        Node nValue = (Node) nlList.item(0);
-
-        return nValue.getNodeValue();
+        // ugly. rewrite.
+        return eElement.getElementsByTagName(sTag).item(0).getChildNodes().item(0).getNodeValue();
     }
 }
