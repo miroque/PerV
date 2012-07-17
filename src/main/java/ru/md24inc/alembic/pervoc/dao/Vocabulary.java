@@ -2,6 +2,7 @@ package ru.md24inc.alembic.pervoc.dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -45,16 +46,23 @@ public class Vocabulary {
     }
 
     /**
-     * Printing to console the content of vocabulary in tabs columns
+     * Temporary wrapper for cards output.
+     * Used as temporary solution during refactoring process.
      */
     public void printVocabular() {
-        System.out.println("Printing All Cards");
-        for (int i = 0; i < voc.size(); i++) {
-            System.out.println("\t" + voc.get(i).getWord() + " \t["
-                    + voc.get(i).getTranscript() + "] \t"
-                    + voc.get(i).getTranslation());
-        }
+        printVocabular(voc);
+    }
 
+    /**
+     * Printing to console the content of vocabulary in tabs columns
+     */
+    public static void printVocabular(Collection<Card> cards) {
+        System.out.println("Printing All Cards");
+        for (Card card : cards) {
+            System.out.println("\t" + card.getWord() + " \t["
+                                    + card.getTranscript() + "] \t"
+                                    + card.getTranslation());
+        }
     }
 
     /**
