@@ -1,6 +1,7 @@
 package ru.md24inc.alembic.pervoc.control;
 
 import ru.md24inc.alembic.pervoc.core.*;
+import ru.md24inc.alembic.pervoc.dao.Vocabulary;
 
 public class ConsoleTest {
 	public static void main(String args[]) {

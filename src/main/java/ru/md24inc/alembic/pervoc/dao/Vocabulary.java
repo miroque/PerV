@@ -1,4 +1,4 @@
-package ru.md24inc.alembic.pervoc.core;
+package ru.md24inc.alembic.pervoc.dao;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
+import ru.md24inc.alembic.pervoc.core.Card;
 
 /**
  * Class Vocabulary for making XML to object

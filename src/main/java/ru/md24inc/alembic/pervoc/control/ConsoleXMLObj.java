@@ -1,6 +1,6 @@
 package ru.md24inc.alembic.pervoc.control;
 
-import ru.md24inc.alembic.pervoc.core.*;
+import ru.md24inc.alembic.pervoc.dao.Vocabulary;
 
 public class ConsoleXMLObj {
     //public final static String srcOfFile = "D:\\workspace\\PerV\\Xclay\\mud.xml";
