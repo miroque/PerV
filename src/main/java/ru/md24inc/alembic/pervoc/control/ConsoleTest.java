@@ -1,15 +1,13 @@
 package ru.md24inc.alembic.pervoc.control;
 
 import ru.md24inc.alembic.pervoc.core.*;
-import ru.md24inc.alembic.pervoc.dao.Vocabulary;
+import ru.md24inc.alembic.pervoc.dao.CardXmlDao;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class ConsoleTest {
 	public static void main(String args[]) {
-		// Initializing New Vocabular
-		Vocabulary myVocabulary = new Vocabulary();
 
 		// Filling each card with some words and info
 		final Collection<Card> myCards = new ArrayList<Card>(6);
@@ -21,7 +19,9 @@ public class ConsoleTest {
 		myCards.add(new Card("God", "gad", "Бог"));
 		myCards.add(new Card("hub", "Hab", "Концентратор. или место сборки"));
 
+		// Initializing New DAO
+		CardXmlDao cardDao = new CardXmlDao();
 		// Printing Vocabular
-		myVocabulary.printVocabular(myCards);
+		cardDao.printToConsole(myCards);
 	}
 }

@@ -17,25 +17,25 @@ import org.w3c.dom.*;
 import ru.md24inc.alembic.pervoc.core.Card;
 
 /**
- * Class Vocabulary for making XML to object
+ * Class for making XML to object
  *
  * @author Alexander Panov
  *
  * @version 0.2
  */
-public class Vocabulary {
+public class CardXmlDao {
 
     /**
      * Class constructor.
      */
-    public Vocabulary() {
+    public CardXmlDao() {
         System.out.println("Initial Vocab");
     }
 
     /**
      * Printing to console the content of vocabulary in tabs columns
      */
-    public void printVocabular(Collection<Card> cards) {
+    public void printToConsole(Collection<Card> cards) {
         System.out.println("Printing All Cards");
         for (Card card : cards) {
             System.out.println("\t" + card.getWord() + " \t["
@@ -50,7 +50,8 @@ public class Vocabulary {
      * @param fileName String for source XML file
      */
     //TODO Add some kind of Error Exceptions
-    public Collection<Card> openXMLFile(String fileName) {
+    // Method tries to do too many things. Need to separate it apart in future
+    public Collection<Card> openXMLFileAndGetAll(String fileName) {
         final Collection<Card> result = new ArrayList<Card>();
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -89,7 +90,8 @@ public class Vocabulary {
      * @param fileName String for output XML file
      */
     //TODO Add some kind of Error Exceptions
-    public void saveXMLFile(String fileName, Collection<Card> cards) {
+    // See? The method have a difficult name. Something is wrong here.
+    public void openXMLFileAndSaveAll(String fileName, Collection<Card> cards) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
