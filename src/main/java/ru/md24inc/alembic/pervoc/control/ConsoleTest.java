@@ -1,31 +1,27 @@
 package ru.md24inc.alembic.pervoc.control;
 
 import ru.md24inc.alembic.pervoc.core.*;
+import ru.md24inc.alembic.pervoc.dao.CardXmlDao;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ConsoleTest {
 	public static void main(String args[]) {
-		// Initializing New Vocabular
-		Vocabulary myVocabulary = new Vocabulary();
 
 		// Filling each card with some words and info
-		Card[] myCards = new Card[6];
-		// добавил спец символов утф-8
-		myCards[0] = new Card("Test", "S\u00ED Se\u00F1or", "Кракозябра");
-		myCards[1] = new Card("God", "gad", "Бог");
-		myCards[2] = new Card("hub", "Hab", "Концентратор. или место сборки");
-		myCards[3] = new Card("Test", "S\u00ED Se\u00F1or", "Кракозябра");
-		myCards[4] = new Card("God", "gad", "Бог");
-		myCards[5] = new Card("hub", "Hab", "Концентратор. или место сборки");
-
+		final Collection<Card> myCards = new ArrayList<Card>(6);
 		// Inserting cards into vocabulary
-		myVocabulary.addCard(myCards[0]);
-		myVocabulary.addCard(myCards[1]);
-		myVocabulary.addCard(myCards[2]);
-		myVocabulary.addCard(myCards[3]);
-		myVocabulary.addCard(myCards[4]);
-		myVocabulary.addCard(myCards[5]);
+		myCards.add(new Card("Test", "S\u00ED Se\u00F1or", "Кракозябра"));
+		myCards.add(new Card("God", "gad", "Бог"));
+		myCards.add(new Card("hub", "Hab", "Концентратор. или место сборки"));
+		myCards.add(new Card("Test", "S\u00ED Se\u00F1or", "Кракозябра"));
+		myCards.add(new Card("God", "gad", "Бог"));
+		myCards.add(new Card("hub", "Hab", "Концентратор. или место сборки"));
 
+		// Initializing New DAO
+		CardXmlDao cardDao = new CardXmlDao();
 		// Printing Vocabular
-		myVocabulary.printVocabular();
+		cardDao.printToConsole(myCards);
 	}
 }

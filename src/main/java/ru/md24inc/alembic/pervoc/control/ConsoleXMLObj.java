@@ -1,6 +1,9 @@
 package ru.md24inc.alembic.pervoc.control;
 
-import ru.md24inc.alembic.pervoc.core.*;
+import ru.md24inc.alembic.pervoc.core.Card;
+import ru.md24inc.alembic.pervoc.dao.CardXmlDao;
+
+import java.util.Collection;
 
 public class ConsoleXMLObj {
     //public final static String srcOfFile = "D:\\workspace\\PerV\\Xclay\\mud.xml";
@@ -8,9 +11,9 @@ public class ConsoleXMLObj {
     public final static String srcOfFile = "c:\\Users\\miroque\\Documents\\NetBeansProjects\\PerV\\Xclay\\mud.xml";
 
     public static void main(String args[]) {
-        Vocabulary vocaBul = new Vocabulary();
-        vocaBul.openXMLFile(srcOfFile);
-        vocaBul.printVocabular();
-        vocaBul.saveXMLFile("c:\\Users\\miroque\\Documents\\NetBeansProjects\\PerV\\Xclay\\mudSaved.xml");
+        CardXmlDao cardDao = new CardXmlDao();
+        final Collection<Card> cards = cardDao.openXMLFileAndGetAll(srcOfFile);
+        cardDao.printToConsole(cards);
+        cardDao.openXMLFileAndSaveAll("c:\\Users\\miroque\\Documents\\NetBeansProjects\\PerV\\Xclay\\mudSaved.xml", cards);
     }
 }
