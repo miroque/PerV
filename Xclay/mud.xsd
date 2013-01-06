@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="vocabulary" type="vocabularyType"/>
+  <xs:complexType name="vocabularyType">
+    <xs:sequence>
+      <xs:element type="cardType" name="card" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wordType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="lang" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+    <xs:complexType name="transcriptType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string" />
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="translationType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="lang" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="cardType">
+    <xs:sequence>
+      <xs:element type="wordType" name="word"/>
+      <xs:element type="transcriptType" name="transcript"/>
+      <xs:element type="translationType" name="translation"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="count" use="optional"/>
+    <xs:attribute type="xs:string" name="date" use="required"/>
+  </xs:complexType>
+</xs:schema>

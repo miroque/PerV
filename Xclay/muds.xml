@@ -1,0 +1,8 @@
+<vocabulary>
+  <!--Zero or more repetitions:-->
+  <card count="string" date="string">
+    <word lang="string">string</word>
+    <transcript>string</transcript>
+    <translation lang="string">string</translation>
+  </card>
+</vocabulary>
