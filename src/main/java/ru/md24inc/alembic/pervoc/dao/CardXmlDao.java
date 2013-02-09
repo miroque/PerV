@@ -3,6 +3,7 @@ package ru.md24inc.alembic.pervoc.dao;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -57,6 +58,70 @@ public class CardXmlDao {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fileName);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("card");
+
+            for (int i = 0; i < nList.getLength(); i++) {
+                final Card card = new Card();
+
+                Node nNode = nList.item(i);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement = (Element) nNode;
+                    card.setWord(getTagValue(("word"), eElement));
+                    card.setTranscript(getTagValue(("transcript"), eElement));
+                    card.setTranslation(getTagValue(("translation"), eElement));
+                }
+
+                result.add(card);
+
+            }// end for
+
+        }// end try
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return result;
+    }
+//    public Collection<Card> openXMLFileAndGetAll(File  file) {
+//        final Collection<Card> result = new ArrayList<Card>();
+//        try {
+//            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(file.getAbsolutePath());
+//            doc.getDocumentElement().normalize();
+//            NodeList nList = doc.getElementsByTagName("card");
+//
+//            for (int i = 0; i < nList.getLength(); i++) {
+//                final Card card = new Card();
+//
+//                Node nNode = nList.item(i);
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                    Element eElement = (Element) nNode;
+//                    card.setWord(getTagValue(("word"), eElement));
+//                    card.setTranscript(getTagValue(("transcript"), eElement));
+//                    card.setTranslation(getTagValue(("translation"), eElement));
+//                }
+//
+//                result.add(card);
+//
+//            }// end for
+//
+//        }// end try
+//        catch (Exception e) {
+//            System.out.println(e);
+//        }
+//
+//        return result;
+//    }
+    public List<Card> openXMLFileAndGetAll(File  file) {
+        final List<Card> result = new ArrayList<Card>();
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(file.getAbsolutePath());
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("card");
 

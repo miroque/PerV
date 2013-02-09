@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?><vocabulary>
+	<card count="1" date="08.11.2010">
+		<word lang="en">torque</word>
+		<transcript>tɔːk</transcript>
+		<translation lang="ru">вращающий момент</translation>
+	</card>
+	<card count="2" date="08.11.2010">
+		<word lang="en">padding</word>
+		<transcript>'pædɪŋ</transcript>
+		<translation lang="ru">набивочный материал</translation>
+	</card>
+	<card count="3" date="08.10.2012">
+		<word lang="en">call</word>
+		<transcript>call</transcript>
+		<translation lang="ru">вызов, зов</translation>
+	</card>
+	<card count="4" date="11.05.2012">
+		<word lang="en">error</word>
+		<transcript>error</transcript>
+		<translation lang="ru">ошибка</translation>
+	</card>
+	<card count="5" date="12.05.2012">
+		<word lang="en">sole</word>
+		<transcript>sole</transcript>
+		<translation lang="ru">не знаю что такое</translation>
+	</card>
+</vocabulary>
