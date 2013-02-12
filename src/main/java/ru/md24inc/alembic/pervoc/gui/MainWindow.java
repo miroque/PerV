@@ -60,7 +60,7 @@ public class MainWindow extends JFrame {
 	private void initComponents() {
 		// Creating main frame and giving it title
 		// Personal Vocabular with def.action on exit.
-		setTitle("Personal Vocabulary (version 0.1)");
+		setTitle("Personal Vocabulary (version 0.10)");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		// Making min. and max sizes.
