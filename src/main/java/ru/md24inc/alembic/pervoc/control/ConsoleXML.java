@@ -12,7 +12,7 @@ import org.jdom2.input.*;
 import ru.md24inc.alembic.pervoc.core.*;
 
 public class ConsoleXML {
-	public final static String srcOfFile = "D:\\workspace\\PerV\\Xclay\\mud.xml";
+	public final static String srcOfFile = "C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\mud.xml";
 
 	public static void main(String args[]) throws JDOMException, IOException {
 

@@ -1,14 +1,24 @@
 package ru.md24inc.alembic.pervoc.gui;
 
+import java.awt.Graphics;
+
 import javax.swing.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: miroque
- * Date: 07.01.13
- * Time: 21:21
- * To change this template use File | Settings | File Templates.
- */
-public class TranscriptPanel extends JPanel{
 
+public class TranscriptPanel extends JPanel {
+	JTextField [] symbols = new JTextField[10];
+	
+	public TranscriptPanel (){
+		for (int i=0; i<10; i++){
+			symbols[i]=new JTextField("i"+i);
+			add(symbols[i]);
+		}
+		
+	}
+	
+	
+	public void paintComponent(Graphics g){
+		
+	}
+	
 }
