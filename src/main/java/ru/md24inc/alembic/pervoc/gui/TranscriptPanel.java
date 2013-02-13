@@ -1,18 +1,15 @@
 package ru.md24inc.alembic.pervoc.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 
 import javax.swing.*;
 
 
 public class TranscriptPanel extends JPanel {
+	private static final long serialVersionUID = -7784099290733841692L;
+
 	JTextField [] symbols = new JTextField[51];
 	
 	public TranscriptPanel (){
@@ -22,7 +19,6 @@ public class TranscriptPanel extends JPanel {
 		for (int i=0; i<51; i++){
 			symbols[i]=new JTextField();
 			symbols[i].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-			setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 			symbols[i].setEditable(false);
 			symbols[i].setHorizontalAlignment(JTextField.CENTER);
 			add(symbols[i]);

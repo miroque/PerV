@@ -89,13 +89,7 @@ public class MainWindow extends JFrame {
 						if (i > 0 && i < extension.length() - 1) {
 							ext = extension.substring(i + 1).toLowerCase();
 						}
-						if (ext != null) {
-							if (ext.equals("pvoc"))
-								return true;
-						} else {
-							return false;
-						}
-
+						if ("pvoc".equals(ext)) return true;
 						return false;
 					}
 
@@ -146,11 +140,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (tp.isVisible())
-					tp.setVisible(false);
-				else
-					tp.setVisible(true);
-
+				tp.setVisible(!tp.isVisible());
 			}
 		});
 		menuViews.add(menuViewsItemTscript);
