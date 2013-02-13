@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.md24inc.alembic.pervoc.gui;
 
 import ru.md24inc.alembic.pervoc.core.Card;
@@ -38,7 +34,7 @@ public class MainWindow extends JFrame {
 	private JScrollPane scrollPaneForTableVoc;
 	private File file;
 	private List<Card> cards;
-	private TranscriptPanel tp; 
+	private TranscriptPanel tp;
 
 	/**
 	 * Creates new form MainWindow
@@ -100,21 +96,15 @@ public class MainWindow extends JFrame {
 							return false;
 						}
 
-						return false; // To change body of implemented methods
-										// use File | Settings | File Templates.
+						return false;
 					}
 
 					@Override
 					public String getDescription() {
-						return "Personal Vocabular Files"; // To change body of
-															// implemented
-															// methods use File
-															// | Settings | File
-															// Templates.
+						return "Personal Vocabular Files";
 					}
 				});
 				fj.setAcceptAllFileFilterUsed(false);
-				// int ret = fileopen.showDialog(null, "Открыть файл");
 				if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
 					file = fj.getSelectedFile();
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
@@ -153,12 +143,14 @@ public class MainWindow extends JFrame {
 				java.awt.event.InputEvent.CTRL_MASK
 						| java.awt.event.InputEvent.SHIFT_MASK));
 		menuViewsItemTscript.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (tp.isVisible())	tp.setVisible(false);
-				else tp.setVisible(true);
-				
+				if (tp.isVisible())
+					tp.setVisible(false);
+				else
+					tp.setVisible(true);
+
 			}
 		});
 		menuViews.add(menuViewsItemTscript);
@@ -171,14 +163,13 @@ public class MainWindow extends JFrame {
 
 		// Creating and Adding Table with Vocabulary into main Frame
 		String[] colNames = { "Word", "Transcript", "Translate" };
-		Object[][] data = { { "dog", "-1-1", "Собака" },
-				{ "table", "tablo", "таблица" } };
+		Object[][] data = { { "", "", "" } };
 		tableVoc = new JTable(data, colNames);
 		scrollPaneForTableVoc = new JScrollPane(tableVoc);
 		tableVoc.setFillsViewportHeight(true);
-		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(BorderLayout.CENTER, scrollPaneForTableVoc);
 		tp = new TranscriptPanel();
+		tp.setVisible(false);
 		add(BorderLayout.NORTH, tp);
 
 		// frame.pack();

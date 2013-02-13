@@ -16,12 +16,14 @@ public class TranscriptPanel extends JPanel {
 	JTextField [] symbols = new JTextField[51];
 	
 	public TranscriptPanel (){
-		setLayout(new GridLayout(0, 10));
+		setLayout(new GridLayout(0, 10, 2, 2));
+		setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		
 		for (int i=0; i<51; i++){
 			symbols[i]=new JTextField();
 			symbols[i].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-			symbols[i].setBounds(0, 0, 30, 30);
+			setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+			symbols[i].setEditable(false);
 			symbols[i].setHorizontalAlignment(JTextField.CENTER);
 			add(symbols[i]);
 		}
@@ -32,7 +34,6 @@ public class TranscriptPanel extends JPanel {
 		symbols[4].setText("\u02A4");
 		symbols[5].setText("\u02A7");
 		symbols[6].setText("\u0261");
-		
 	}
 	
 	
