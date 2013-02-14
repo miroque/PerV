@@ -5,7 +5,9 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.*;
 
@@ -15,7 +17,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 public class TranscriptPanel extends JPanel {
 	private static final long serialVersionUID = -7784099290733841692L;
 
-	JTextField[] symbols = new JTextField[51];
+	JTextField[] symbols;
 
 	public TranscriptPanel() {
 		initSymbols();
@@ -35,15 +37,31 @@ public class TranscriptPanel extends JPanel {
 		setLayout(new GridLayout(0, 10, 2, 2));
 		setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		List<Object> cons = mxconf.getList("Consonants.symbol");
-		for (int i = 0; i < 51; i++) {
-			symbols[i] = new JTextField();
-			symbols[i].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-			symbols[i].setEditable(false);
-			symbols[i].setHorizontalAlignment(JTextField.CENTER);
-			add(symbols[i]);
+		List<Object> vow = mxconf.getList("Vowels.symbol");
+		int totalS = cons.size()+vow.size();
+		symbols = new JTextField[totalS];
+		ListIterator<Object> it = cons.listIterator();
+		int go=0;
+		while (it.hasNext()){
+			Object ob = it.next();
+			symbols[go] = new JTextField();
+			symbols[go].setText(ob.toString());
+			symbols[go].setEditable(false);
+			symbols[go].setHorizontalAlignment(JTextField.CENTER);
+			symbols[go].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+			add(symbols[go]);
+			go++;
 		}
-		for (Object c : cons) {
-			symbols[1].setText(c.toString());
+		it = vow.listIterator();
+		while (it.hasNext()){
+			Object ob = it.next();
+			symbols[go] = new JTextField();
+			symbols[go].setText(ob.toString());
+			symbols[go].setEditable(false);
+			symbols[go].setHorizontalAlignment(JTextField.CENTER);
+			symbols[go].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+			add(symbols[go]);
+			go++;
 		}
 	}
 

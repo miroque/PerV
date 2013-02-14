@@ -14,7 +14,7 @@
 		<symbol sound="djsh" hint="judge, age, soldier"></symbol>
 		<symbol sound="f" hint="fat, coffee, rough, photo">f</symbol>
 		<symbol sound="v" hint="view, heavy, move">v</symbol>
-		<symbol sound="θ" hint="thing, author, path">\u03B8</symbol>
+		<symbol sound="θ" hint="thing, author, path">θ</symbol><!-- \u03B8 -->
 		<symbol sound="ð" hint="this, other, smooth">\u00F0</symbol>
 		<symbol sound="s" hint="soon, cease, sister">s</symbol>
 		<symbol sound="z" hint="zero, music, roses, buzz">z</symbol>
