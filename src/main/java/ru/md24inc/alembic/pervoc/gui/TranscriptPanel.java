@@ -39,9 +39,11 @@ public class TranscriptPanel extends JPanel {
 		List<Object> cons = mxconf.getList("Consonants.symbol");
 		List<Object> vow = mxconf.getList("Vowels.symbol");
 		int totalS = cons.size()+vow.size();
-		symbols = new JTextField[totalS];
+		symbols = new JTextField[totalS+2];
 		ListIterator<Object> it = cons.listIterator();
-		int go=0;
+		symbols[0] = new JTextField("Consonants");
+		add(symbols[0]);
+		int go=1;
 		while (it.hasNext()){
 			Object ob = it.next();
 			symbols[go] = new JTextField();
@@ -52,6 +54,8 @@ public class TranscriptPanel extends JPanel {
 			add(symbols[go]);
 			go++;
 		}
+		symbols[++go] = new JTextField("Vowels");
+		add(symbols[go]);
 		it = vow.listIterator();
 		while (it.hasNext()){
 			Object ob = it.next();
