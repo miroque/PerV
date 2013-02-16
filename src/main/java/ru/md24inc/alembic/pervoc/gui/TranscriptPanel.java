@@ -18,15 +18,20 @@ public class TranscriptPanel extends JPanel {
 
 //	JTextField[] symbols;
 	JLabel[] symbols;
+    List<Object> cons;
+    List<Object> vow;
+    List<Object> spec;
+    Border border;
 
-	public TranscriptPanel() {
+    public TranscriptPanel() {
 		initSymbols();
 	}
 
 	private void initSymbols() {
-        //
+        //Setting up Panel properties
 		setLayout(new GridLayout(0, 10, 2, 2));
 		setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        border = BorderFactory.createLineBorder(Color.lightGray, 1);
         //Reading xml file with transcript symbols
 		XMLConfiguration mxconf = null;
 		try {
@@ -39,30 +44,32 @@ public class TranscriptPanel extends JPanel {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-
-		List<Object> cons = mxconf.getList("Consonants.symbol");
+        //Fill up collection variables with needed symbols
+		cons = mxconf.getList("Consonants.symbol");
+		vow = mxconf.getList("Vowels.symbol");
+		spec = mxconf.getList("Special.symbol");
 //        for (int i=0 ; i<cons.size();i++){
 //		String consAtr = mxconf.getString("Consonants.symbol(0)[@hint]","");
 //        }
-		List<Object> vow = mxconf.getList("Vowels.symbol");
-		int totalS = cons.size()+vow.size();
-		symbols = new JLabel[totalS+2];
-        Border border = BorderFactory.createLineBorder(Color.lightGray, 1);
 
-        ListIterator<Object> it = cons.listIterator();
+        //Initiate new array of Jlabels with total symbols
+        //plus 2 additional for hints words
+		int totalSymbols = cons.size()+vow.size()+spec.size();
+		symbols = new JLabel[totalSymbols+3];
+
+        //Filling Consonant symbols
 		symbols[0] = new JLabel("Cons");
         symbols[0].setBorder(border);
         symbols[0].setToolTipText("Consonants");
-//        symbols[0].setEditable(false);
         symbols[0].setHorizontalAlignment(JTextField.CENTER);
         symbols[0].setForeground(new Color(0,0,140));
 		add(symbols[0]);
+        ListIterator<Object> it = cons.listIterator();
 		int go=1;
 		while (it.hasNext()){
 			Object ob = it.next();
 			symbols[go] = new JLabel();
 			symbols[go].setText(ob.toString());
-//			symbols[go].setEditable(false);
             symbols[go].setBorder(border);
 			symbols[go].setHorizontalAlignment(JLabel.CENTER);
             symbols[go].setForeground(new Color(0, 0, 140));
@@ -70,10 +77,9 @@ public class TranscriptPanel extends JPanel {
 			add(symbols[go]);
 			go++;
 		}
+        //Filling Vowels symbols
 		symbols[++go] = new JLabel("Vow");
-//        symbols[go].
         symbols[go].setToolTipText("Vowels");
-//        symbols[go].setEditable(false);
         symbols[go].setHorizontalAlignment(JLabel.CENTER);
         symbols[go].setBorder(border);
         symbols[go].setForeground(new Color(130, 0, 0));
@@ -83,10 +89,28 @@ public class TranscriptPanel extends JPanel {
 			Object ob = it.next();
 			symbols[go] = new JLabel();
 			symbols[go].setText(ob.toString());
-//			symbols[go].setEditable(false);
             symbols[go].setBorder(border);
 			symbols[go].setHorizontalAlignment(JLabel.CENTER);
             symbols[go].setForeground(new Color(130, 0, 0));
+			symbols[go].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+			add(symbols[go]);
+			go++;
+		}
+        //Filling Special symbols
+        symbols[++go] = new JLabel("Spec");
+        symbols[go].setToolTipText("Special");
+        symbols[go].setHorizontalAlignment(JLabel.CENTER);
+        symbols[go].setBorder(border);
+        symbols[go].setForeground(new Color(130, 100, 0));
+		add(symbols[go]);
+		it = spec.listIterator();
+		while (it.hasNext()){
+			Object ob = it.next();
+			symbols[go] = new JLabel();
+			symbols[go].setText(ob.toString());
+            symbols[go].setBorder(border);
+			symbols[go].setHorizontalAlignment(JLabel.CENTER);
+            symbols[go].setForeground(new Color(130, 100, 0));
 			symbols[go].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
 			add(symbols[go]);
 			go++;

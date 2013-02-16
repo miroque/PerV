@@ -29,6 +29,8 @@
 		<symbol sound="j" hint="yet, use, beauty, few">j</symbol>
 		<symbol sound="w" hint="wet, one, when, queen">w</symbol>
 		<symbol sound="ʔ" hint="(glottal stop) department, football">ʔ</symbol>
+		<symbol sound="n̩" hint="suddenly, cotton">n̩</symbol>
+		<symbol sound="l̩" hint="middle, metal">l̩</symbol>
 	</Consonants>
 	<Vowels>
 		<symbol sound="ɪ" hint="kit, bid, hymn, minute">ɪ</symbol>
@@ -53,9 +55,9 @@
 		<symbol sound="ə" hint="about, common, standard">ə</symbol>
 		<symbol sound="i" hint="happy, radiate. glorious">i</symbol>
 		<symbol sound="u" hint="thank you, influence, situation">u</symbol>
-		<symbol sound="n̩" hint="suddenly, cotton">n̩</symbol>
-		<symbol sound="l̩" hint="middle, metal">l̩</symbol>
+	</Vowels>
+	<Special>
 		<symbol sound="ˈ" hint="(stress mark)">ˈ</symbol>
 		<symbol sound="ˌ" hint="(secondary stress)">ˌ</symbol>
-	</Vowels>
+	</Special>
 </PhoneticSymbols>
