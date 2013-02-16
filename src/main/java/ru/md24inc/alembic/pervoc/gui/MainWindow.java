@@ -104,6 +104,7 @@ public class MainWindow extends JFrame {
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
 					TableModel model = new MyTableModel(cards);
 					tableVoc.setModel(model);
+                    System.out.println(Card.getCount());
 				}
 			}
 		});
@@ -161,6 +162,7 @@ public class MainWindow extends JFrame {
 		tp = new TranscriptPanel();
 		tp.setVisible(false);
 		add(BorderLayout.NORTH, tp);
+
 
 		// frame.pack();
 		setVisible(true);

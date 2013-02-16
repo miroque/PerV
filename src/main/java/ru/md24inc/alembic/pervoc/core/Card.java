@@ -1,46 +1,73 @@
 package ru.md24inc.alembic.pervoc.core;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Card {
-	private Word word;
-	private Transcript transcript;
-	private Translation translation;
-        private Date date;
+    private static int count;
+    private Word word;
+    private Transcript transcript;
+    private Translation translation;
+    private Date dated;
 
-	public Card() {
-		word = new Word();
-		transcript = new Transcript();
-		translation = new Translation();
-	}
+    public static int getCount() {
+        return count;
+    }
 
-	public Card(String wrd, String trc, String trs) {
-		word = new Word(wrd);
-		transcript = new Transcript(trc);
-		translation = new Translation(trs);
-	}
+    public void setDated(Date dated) {
+        this.dated = dated;
+    }
 
-	public String getWord() {
-		return word.getWord();
-	}
 
-	public void setWord(String word) {
-		this.word.setWord(word);
-	}
+    public Date getDated() {
+        return dated;
+    }
 
-	public String getTranscript() {
-		return transcript.getTranscript();
-	}
 
-	public void setTranscript(String transcript) {
-		this.transcript.setTranscript(transcript);
-	}
+    public Card() {
+        count++;
+        word = new Word();
+        transcript = new Transcript();
+        translation = new Translation();
+    }
 
-	public String getTranslation() {
-		return translation.getTranslation();
-	}
+    public Card(Date date, String wrd, String trc, String trs) {
+        count++;
+        dated = date;
+        word = new Word(wrd);
+        transcript = new Transcript(trc);
+        translation = new Translation(trs);
+    }
 
-	public void setTranslation(String translation) {
-		this.translation.setTranslation(translation);
-	}
+    public Card(String wrd, String trc, String trs) {
+        count++;
+        dated = Calendar.getInstance().getTime();
+        word = new Word(wrd);
+        transcript = new Transcript(trc);
+        translation = new Translation(trs);
+    }
+
+    public String getWord() {
+        return word.getWord();
+    }
+
+    public void setWord(String word) {
+        this.word.setWord(word);
+    }
+
+    public String getTranscript() {
+        return transcript.getTranscript();
+    }
+
+    public void setTranscript(String transcript) {
+        this.transcript.setTranscript(transcript);
+    }
+
+    public String getTranslation() {
+        return translation.getTranslation();
+    }
+
+    public void setTranslation(String translation) {
+        this.translation.setTranslation(translation);
+    }
 }

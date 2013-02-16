@@ -1,20 +1,30 @@
 package ru.md24inc.alembic.pervoc.core;
 
 public class Translation {
-	private String translation;
+    private String translation;
+    private String language;
 
-	public Translation() {
-	}
+    public Translation() {
+    }
 
-	public Translation(String translation) {
-		this.translation = translation;
-	}
+    public String getLanguage() {
+        return language;
+    }
 
-	public String getTranslation() {
-		return translation;
-	}
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
-	public void setTranslation(String translation) {
-		this.translation = translation;
-	}
+
+    public Translation(String translation) {
+        this.translation = translation;
+    }
+
+    public String getTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(String translation) {
+        this.translation = translation;
+    }
 }

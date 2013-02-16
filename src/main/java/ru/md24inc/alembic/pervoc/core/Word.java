@@ -4,35 +4,42 @@ package ru.md24inc.alembic.pervoc.core;
  * Class Word for making XML to object
  *
  * @author Alexander Panov
- *
  * @version 0.1
  */
 
 public class Word {
-	private String word;
+    private String word;
+    private String language;
 
-	/**
-	 * Class constructor.
-	 */
-	public Word() {
+    /**
+     * Class constructor.
+     */
+    public Word() {
 
-	}
+    }
 
-	/**
-	 * Class constructor.
-	 *
-	 * @param word
-	 *            String word to write into Word
-	 */
-	public Word(String word) {
-		this.word = word;
-	}
+    public String getLanguage() {
+        return language;
+    }
 
-	public String getWord() {
-		return word;
-	}
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
-	public void setWord(String word) {
-		this.word = word;
-	}
+    /**
+     * Class constructor.
+     *
+     * @param word String word to write into Word
+     */
+    public Word(String word) {
+        this.word = word;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
 }
