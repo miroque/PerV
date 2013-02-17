@@ -13,6 +13,9 @@ public class Card {
     public static int getCount() {
         return count;
     }
+    public static void resetCount(){
+        count=0;
+    }
 
     public void setDated(Date dated) {
         this.dated = dated;
