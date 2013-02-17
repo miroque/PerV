@@ -76,6 +76,7 @@ public class MainWindow extends JFrame {
 		menuFileItemOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Card.resetCount();
 				JFileChooser fj = new JFileChooser();
 				fj.addChoosableFileFilter(new FileFilter() {
 					@Override
