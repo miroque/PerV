@@ -5,8 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.File;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -39,14 +38,9 @@ public class TranscriptPanel extends JPanel {
 		// Reading xml file with phonetic symbols
 		XMLConfiguration mxconf = null;
 		try {
-			mxconf = new XMLConfiguration(new URL(
-			// "file:///C:/Users/panov/workspaces/experiz/PerV/symbols.xml"));
-			// "file:///C:\\Users\\miroque\\intelijwsp\\PerV\\symbols.xml"));
-					"file:///C:\\Users\\Itayra\\workspace\\PerV\\symbols.xml"));
+			mxconf = new XMLConfiguration(new File("src/main/resources/symbols.xml"));
 		} catch (ConfigurationException e) {
 			System.out.println("Reading config failed due: " + e.getMessage());
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
 		}
 		// Fill up collection variables with needed symbols
 		consonants = mxconf.getList("Consonants.symbol");
