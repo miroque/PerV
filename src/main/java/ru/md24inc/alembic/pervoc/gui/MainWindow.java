@@ -29,6 +29,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem menuFileItemQuit;
 	private JMenuItem menuFileItemSave;
 	private JMenuItem menuViewsItemTscript;
+	private JFileChooser fj;
 	private JTable tableVoc;
 	private JScrollPane scrollPaneForTableVoc;
 	private File file;
@@ -73,11 +74,10 @@ public class MainWindow extends JFrame {
 		menuFileItemOpen.setAccelerator(KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_O,
 				java.awt.event.InputEvent.CTRL_MASK));
+		fj = new JFileChooser();
 		menuFileItemOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Card.resetCount();
-				JFileChooser fj = new JFileChooser();
 				fj.addChoosableFileFilter(new FileFilter() {
 					@Override
 					public boolean accept(File f) {
@@ -90,6 +90,7 @@ public class MainWindow extends JFrame {
 						if (i > 0 && i < extension.length() - 1) {
 							ext = extension.substring(i + 1).toLowerCase();
 						}
+						fj.setCurrentDirectory(f);
 						if ("pvoc".equals(ext))
 							return true;
 						return false;
@@ -106,7 +107,7 @@ public class MainWindow extends JFrame {
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
 					TableModel model = new MyTableModel(cards);
 					tableVoc.setModel(model);
-					System.out.println(Card.getCount());
+					System.out.println(cards.size());
 				}
 			}
 		});

@@ -4,18 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Card {
-    private static int count;
     private Word word;
     private Transcript transcript;
     private Translation translation;
     private Date dated;
-
-    public static int getCount() {
-        return count;
-    }
-    public static void resetCount(){
-        count=0;
-    }
 
     public void setDated(Date dated) {
         this.dated = dated;
@@ -28,14 +20,12 @@ public class Card {
 
 
     public Card() {
-        count++;
         word = new Word();
         transcript = new Transcript();
         translation = new Translation();
     }
 
     public Card(Date date, String wrd, String trc, String trs) {
-        count++;
         dated = date;
         word = new Word(wrd);
         transcript = new Transcript(trc);
@@ -43,7 +33,6 @@ public class Card {
     }
 
     public Card(String wrd, String trc, String trs) {
-        count++;
         dated = Calendar.getInstance().getTime();
         word = new Word(wrd);
         transcript = new Transcript(trc);
