@@ -38,7 +38,8 @@ public class TranscriptPanel extends JPanel {
 		// Reading xml file with phonetic symbols
 		XMLConfiguration mxconf = null;
 		try {
-			mxconf = new XMLConfiguration(new File("src/main/resources/symbols.xml"));
+			mxconf = new XMLConfiguration(new File(
+					"src/main/resources/symbols.xml"));
 		} catch (ConfigurationException e) {
 			System.out.println("Reading config failed due: " + e.getMessage());
 		}
@@ -61,7 +62,7 @@ public class TranscriptPanel extends JPanel {
 		add(test[2]);
 	}
 
-	class SymbolRow extends JPanel implements MouseListener{
+	class SymbolRow extends JPanel implements MouseListener {
 		JLabel header;
 		JLabel[] symbolsHolder;
 		Border fronties = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1);
@@ -103,34 +104,33 @@ public class TranscriptPanel extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			JLabel ex = (JLabel) e.getComponent();
-			System.out.print(ex.getText()+" ");
+			System.out.print(ex.getText() + " ");
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
-		
 	}
 
 	public void paintComponent(Graphics g) {

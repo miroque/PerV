@@ -47,6 +47,7 @@ public class MainWindow extends JFrame {
 		// Schedule a job for the event-dispatching thread:
 		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				new MainWindow().setVisible(true);
 			}
@@ -90,7 +91,8 @@ public class MainWindow extends JFrame {
 						if (i > 0 && i < extension.length() - 1) {
 							ext = extension.substring(i + 1).toLowerCase();
 						}
-						if ("pvoc".equals(ext)) return true;
+						if ("pvoc".equals(ext))
+							return true;
 						return false;
 					}
 
@@ -105,7 +107,7 @@ public class MainWindow extends JFrame {
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
 					TableModel model = new MyTableModel(cards);
 					tableVoc.setModel(model);
-                    System.out.println(Card.getCount());
+					System.out.println(Card.getCount());
 				}
 			}
 		});
@@ -139,7 +141,6 @@ public class MainWindow extends JFrame {
 				java.awt.event.InputEvent.CTRL_MASK
 						| java.awt.event.InputEvent.SHIFT_MASK));
 		menuViewsItemTscript.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tp.setVisible(!tp.isVisible());
@@ -164,7 +165,6 @@ public class MainWindow extends JFrame {
 		tp.setVisible(false);
 		add(BorderLayout.NORTH, tp);
 
-
 		// frame.pack();
 		setVisible(true);
 	}
@@ -178,18 +178,22 @@ public class MainWindow extends JFrame {
 			this.beans = beans;
 		}
 
+		@Override
 		public void addTableModelListener(TableModelListener listener) {
 			listeners.add(listener);
 		}
 
+		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
 
+		@Override
 		public int getColumnCount() {
 			return 3;
 		}
 
+		@Override
 		public String getColumnName(int columnIndex) {
 			switch (columnIndex) {
 			case 0:
@@ -202,10 +206,12 @@ public class MainWindow extends JFrame {
 			return "";
 		}
 
+		@Override
 		public int getRowCount() {
 			return beans.size();
 		}
 
+		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			Card bean = beans.get(rowIndex);
 			switch (columnIndex) {
@@ -219,14 +225,17 @@ public class MainWindow extends JFrame {
 			return "";
 		}
 
+		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
 			return true;
 		}
 
+		@Override
 		public void removeTableModelListener(TableModelListener listener) {
 			listeners.remove(listener);
 		}
 
+		@Override
 		public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
 		}
