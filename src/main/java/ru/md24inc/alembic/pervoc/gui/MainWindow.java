@@ -30,11 +30,11 @@ public class MainWindow extends JFrame {
 	private JMenuItem menuFileItemSave;
 	private JMenuItem menuViewsItemTscript;
 	private JFileChooser fj;
-	private JTable tableVoc;
+	private JTable tableOfCards;
 	private JScrollPane scrollPaneForTableVoc;
 	private File file;
 	private List<Card> cards;
-	private TranscriptPanel tp;
+	private TranscriptPanel transcriptPanel;
 
 	/**
 	 * Creates new form MainWindow
@@ -106,7 +106,7 @@ public class MainWindow extends JFrame {
 					file = fj.getSelectedFile();
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
 					TableModel model = new MyTableModel(cards);
-					tableVoc.setModel(model);
+					tableOfCards.setModel(model);
 					System.out.println(cards.size());
 				}
 			}
@@ -143,7 +143,7 @@ public class MainWindow extends JFrame {
 		menuViewsItemTscript.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tp.setVisible(!tp.isVisible());
+				transcriptPanel.setVisible(!transcriptPanel.isVisible());
 			}
 		});
 		menuViews.add(menuViewsItemTscript);
@@ -157,13 +157,13 @@ public class MainWindow extends JFrame {
 		// Creating and Adding Table with Vocabulary into main Frame
 		String[] colNames = { "Word", "Transcript", "Translate" };
 		Object[][] data = { { "", "", "" } };
-		tableVoc = new JTable(data, colNames);
-		scrollPaneForTableVoc = new JScrollPane(tableVoc);
-		tableVoc.setFillsViewportHeight(true);
+		tableOfCards = new JTable(data, colNames);
+		scrollPaneForTableVoc = new JScrollPane(tableOfCards);
+		tableOfCards.setFillsViewportHeight(true);
 		add(BorderLayout.CENTER, scrollPaneForTableVoc);
-		tp = new TranscriptPanel();
-		tp.setVisible(false);
-		add(BorderLayout.NORTH, tp);
+		transcriptPanel = new TranscriptPanel();
+		transcriptPanel.setVisible(false);
+		add(BorderLayout.NORTH, transcriptPanel);
 
 		// frame.pack();
 		setVisible(true);
