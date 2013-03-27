@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,11 +29,12 @@ public class MainWindow extends JFrame {
 	private JMenuItem menuFileItemQuit;
 	private JMenuItem menuFileItemSave;
 	private JMenuItem menuViewsItemTscript;
-	private JTable tableVoc;
+	private JFileChooser fj;
+	private JTable tableOfCards;
 	private JScrollPane scrollPaneForTableVoc;
 	private File file;
 	private List<Card> cards;
-	private TranscriptPanel tp;
+	private TranscriptPanel transcriptPanel;
 
 	/**
 	 * Creates new form MainWindow
@@ -47,6 +47,7 @@ public class MainWindow extends JFrame {
 		// Schedule a job for the event-dispatching thread:
 		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				new MainWindow().setVisible(true);
 			}
@@ -73,11 +74,10 @@ public class MainWindow extends JFrame {
 		menuFileItemOpen.setAccelerator(KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_O,
 				java.awt.event.InputEvent.CTRL_MASK));
+		fj = new JFileChooser();
 		menuFileItemOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Card.resetCount();
-				JFileChooser fj = new JFileChooser();
 				fj.addChoosableFileFilter(new FileFilter() {
 					@Override
 					public boolean accept(File f) {
@@ -90,7 +90,9 @@ public class MainWindow extends JFrame {
 						if (i > 0 && i < extension.length() - 1) {
 							ext = extension.substring(i + 1).toLowerCase();
 						}
-						if ("pvoc".equals(ext)) return true;
+						fj.setCurrentDirectory(f);
+						if ("pvoc".equals(ext))
+							return true;
 						return false;
 					}
 
@@ -104,8 +106,8 @@ public class MainWindow extends JFrame {
 					file = fj.getSelectedFile();
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
 					TableModel model = new MyTableModel(cards);
-					tableVoc.setModel(model);
-                    System.out.println(Card.getCount());
+					tableOfCards.setModel(model);
+					System.out.println(cards.size());
 				}
 			}
 		});
@@ -139,10 +141,9 @@ public class MainWindow extends JFrame {
 				java.awt.event.InputEvent.CTRL_MASK
 						| java.awt.event.InputEvent.SHIFT_MASK));
 		menuViewsItemTscript.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tp.setVisible(!tp.isVisible());
+				transcriptPanel.setVisible(!transcriptPanel.isVisible());
 			}
 		});
 		menuViews.add(menuViewsItemTscript);
@@ -156,14 +157,13 @@ public class MainWindow extends JFrame {
 		// Creating and Adding Table with Vocabulary into main Frame
 		String[] colNames = { "Word", "Transcript", "Translate" };
 		Object[][] data = { { "", "", "" } };
-		tableVoc = new JTable(data, colNames);
-		scrollPaneForTableVoc = new JScrollPane(tableVoc);
-		tableVoc.setFillsViewportHeight(true);
+		tableOfCards = new JTable(data, colNames);
+		scrollPaneForTableVoc = new JScrollPane(tableOfCards);
+		tableOfCards.setFillsViewportHeight(true);
 		add(BorderLayout.CENTER, scrollPaneForTableVoc);
-		tp = new TranscriptPanel();
-		tp.setVisible(false);
-		add(BorderLayout.NORTH, tp);
-
+		transcriptPanel = new TranscriptPanel();
+		transcriptPanel.setVisible(false);
+		add(BorderLayout.NORTH, transcriptPanel);
 
 		// frame.pack();
 		setVisible(true);
@@ -178,18 +178,22 @@ public class MainWindow extends JFrame {
 			this.beans = beans;
 		}
 
+		@Override
 		public void addTableModelListener(TableModelListener listener) {
 			listeners.add(listener);
 		}
 
+		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
 
+		@Override
 		public int getColumnCount() {
 			return 3;
 		}
 
+		@Override
 		public String getColumnName(int columnIndex) {
 			switch (columnIndex) {
 			case 0:
@@ -202,10 +206,12 @@ public class MainWindow extends JFrame {
 			return "";
 		}
 
+		@Override
 		public int getRowCount() {
 			return beans.size();
 		}
 
+		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			Card bean = beans.get(rowIndex);
 			switch (columnIndex) {
@@ -219,14 +225,17 @@ public class MainWindow extends JFrame {
 			return "";
 		}
 
+		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
 			return true;
 		}
 
+		@Override
 		public void removeTableModelListener(TableModelListener listener) {
 			listeners.remove(listener);
 		}
 
+		@Override
 		public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
 		}
