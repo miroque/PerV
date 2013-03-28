@@ -7,7 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -155,14 +157,20 @@ public class MainWindow extends JFrame {
 		setJMenuBar(menuBar);
 
 		// Creating and Adding Table with Vocabulary into main Frame
-		String[] colNames = { "Word", "Transcript", "Translate" };
-		Object[][] data = { { "", "", "" } };
-		tableOfCards = new JTable(data, colNames);
+        cards = new ArrayList<Card>();
+        cards.add(new Card());
+        cards.add(new Card());
+        cards.add(new Card());
+        TableModel model1 = new MyTableModel(cards);
+		tableOfCards = new JTable();
+        tableOfCards.setModel(model1);
 		scrollPaneForTableVoc = new JScrollPane(tableOfCards);
+        tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
 		tableOfCards.setFillsViewportHeight(true);
 		add(BorderLayout.CENTER, scrollPaneForTableVoc);
 		transcriptPanel = new TranscriptPanel();
 		transcriptPanel.setVisible(false);
+        transcriptPanel.addTypeIn(tableOfCards);
 		add(BorderLayout.NORTH, transcriptPanel);
 
 		// frame.pack();

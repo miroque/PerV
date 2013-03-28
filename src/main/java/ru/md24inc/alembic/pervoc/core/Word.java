@@ -8,14 +8,13 @@ package ru.md24inc.alembic.pervoc.core;
  */
 
 public class Word {
-    private String word;
-    private String language;
+    private String word="";
+    private String language="";
 
     /**
      * Class constructor.
      */
     public Word() {
-
     }
 
     public String getLanguage() {

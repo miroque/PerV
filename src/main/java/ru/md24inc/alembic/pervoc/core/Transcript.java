@@ -1,7 +1,7 @@
 package ru.md24inc.alembic.pervoc.core;
 
 public class Transcript {
-	private String transcript;
+	private String transcript="";
 
 	public Transcript() {
 	}

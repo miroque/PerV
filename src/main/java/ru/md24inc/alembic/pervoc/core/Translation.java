@@ -1,8 +1,8 @@
 package ru.md24inc.alembic.pervoc.core;
 
 public class Translation {
-    private String translation;
-    private String language;
+    private String translation="";
+    private String language="";
 
     public Translation() {
     }
