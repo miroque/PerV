@@ -96,13 +96,14 @@ public class TranscriptPanel extends JPanel {
 		}
 
         private void typeInActiveCell(JLabel ex) {
-            if (typeIn.isCellSelected(typeIn.getSelectedRow(), typeIn.getSelectedColumn())) {
+        	System.out.println("Class of column: "+typeIn.getColumnClass(typeIn.getSelectedColumn()));
+            /*if (typeIn.isCellSelected(typeIn.getSelectedRow(), typeIn.getSelectedColumn())) {
                 System.out.println("Value at selected cell: " + typeIn.getModel().getValueAt(typeIn.getSelectedRow(), typeIn.getSelectedColumn()).toString());
                 typeIn.setValueAt(typeIn.getValueAt(typeIn.getSelectedRow(), typeIn.getSelectedColumn()).toString() + ex.getText(), typeIn.getSelectedRow(), typeIn.getSelectedColumn());
             } else {
                 System.out.println("Sorry cell not selected");
             }
-            typeIn.repaint();
+            typeIn.repaint();*/
         }
 
         @Override

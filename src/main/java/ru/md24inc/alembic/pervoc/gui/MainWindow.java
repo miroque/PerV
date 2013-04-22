@@ -1,6 +1,9 @@
 package ru.md24inc.alembic.pervoc.gui;
 
 import ru.md24inc.alembic.pervoc.core.Card;
+import ru.md24inc.alembic.pervoc.core.Transcript;
+import ru.md24inc.alembic.pervoc.core.Translation;
+import ru.md24inc.alembic.pervoc.core.Word;
 import ru.md24inc.alembic.pervoc.dao.CardXmlDao;
 
 import java.awt.BorderLayout;
@@ -107,7 +110,7 @@ public class MainWindow extends JFrame {
 				if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
 					file = fj.getSelectedFile();
 					cards = new CardXmlDao().openXMLFileAndGetAll(file);
-					TableModel model = new MyTableModel(cards);
+					TableModel model = new CardTableModel(cards);
 					tableOfCards.setModel(model);
 					System.out.println(cards.size());
 				}
@@ -161,7 +164,7 @@ public class MainWindow extends JFrame {
         cards.add(new Card());
         cards.add(new Card());
         cards.add(new Card());
-        TableModel model1 = new MyTableModel(cards);
+        TableModel model1 = new CardTableModel(cards);
 		tableOfCards = new JTable();
         tableOfCards.setModel(model1);
 		scrollPaneForTableVoc = new JScrollPane(tableOfCards);
@@ -177,12 +180,13 @@ public class MainWindow extends JFrame {
 		setVisible(true);
 	}
 
-	private class MyTableModel implements TableModel {
+	private class CardTableModel implements TableModel {
 
 		private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+		private String[] colNames = { "Word", "Transcript", "Translation" };
 		private List<Card> beans;
 
-		public MyTableModel(List<Card> beans) {
+		public CardTableModel(List<Card> beans) {
 			this.beans = beans;
 		}
 
@@ -193,25 +197,24 @@ public class MainWindow extends JFrame {
 
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
-			return String.class;
+			if (colNames[columnIndex].equalsIgnoreCase("Word"))
+				return Word.class;
+			else if (colNames[columnIndex].equalsIgnoreCase("Transcript"))
+				return Transcript.class;
+			else if (colNames[columnIndex].equalsIgnoreCase("Translation"))
+				return Translation.class;
+			else
+				return null;
 		}
 
 		@Override
 		public int getColumnCount() {
-			return 3;
+			return colNames.length;
 		}
 
 		@Override
 		public String getColumnName(int columnIndex) {
-			switch (columnIndex) {
-			case 0:
-				return "Word";
-			case 1:
-				return "Transcript";
-			case 2:
-				return "Translate";
-			}
-			return "";
+			return colNames[columnIndex];
 		}
 
 		@Override
@@ -245,7 +248,8 @@ public class MainWindow extends JFrame {
 
 		@Override
 		public void setValueAt(Object value, int rowIndex, int columnIndex) {
-
+			 beans.set(rowIndex, (Card) value);
+//			 fireTableCellUpdated(rowIndex, columnIndex);
 		}
 
 	}
