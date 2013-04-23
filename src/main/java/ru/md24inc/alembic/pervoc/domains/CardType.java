@@ -151,7 +151,7 @@ public class CardType {
     }
     
     public String toString(){
-    	return "Card ["+word.getValue()+" "+ transcript.getValue() +" "+ translation.getValue() +" ] by date "+ date;
+    	return "Card ("+date+")["+word.getValue()+"|"+ transcript.getValue() +"|"+ translation.getValue() +" ]";
     }
 
 }
