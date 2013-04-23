@@ -149,5 +149,9 @@ public class CardType {
     public void setDate(String value) {
         this.date = value;
     }
+    
+    public String toString(){
+    	return "Card ["+word.getValue()+" "+ transcript.getValue() +" "+ translation.getValue() +" ] by date "+ date;
+    }
 
 }

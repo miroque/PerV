@@ -1,14 +1,24 @@
 package ru.md24inc.alembic.pervoc.control;
 
-import ru.md24inc.alembic.pervoc.domains.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.UnmappableCharacterException;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
+import ru.md24inc.alembic.pervoc.domains.CardType;
+import ru.md24inc.alembic.pervoc.domains.ObjectFactory;
+import ru.md24inc.alembic.pervoc.domains.TranscriptType;
+import ru.md24inc.alembic.pervoc.domains.TranslationType;
+import ru.md24inc.alembic.pervoc.domains.VocabularyType;
+import ru.md24inc.alembic.pervoc.domains.WordType;
 
 public class Test02 {
 	public static void main(String args[]) throws JAXBException {
@@ -61,6 +71,23 @@ public class Test02 {
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
  
 		jaxbMarshaller.marshal(vocabulary, System.out);
+		try {
+			jaxbMarshaller.marshal(vocabulary, new FileWriter("C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\Musrum.xml"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Unmarshaller um  = jaxbContext.createUnmarshaller();
+		try {
+//			VocabularyType myVoc = (VocabularyType) um.unmarshal(new FileReader("C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\Musrum.xml"));
+			VocabularyType myVoc = (VocabularyType) um.unmarshal(new FileReader("C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\mud.xml"));
+			List<CardType> vc = myVoc.getCard();
+			System.out.println(vc.toString());
+		} catch (FileNotFoundException e) {
+			//I guess that one of the solution is 
+			// converting this input file to UTF-8 without BOM
+			e.printStackTrace();
+		}
 		
 	}
 }
