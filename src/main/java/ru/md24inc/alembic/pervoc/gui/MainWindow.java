@@ -1,10 +1,10 @@
 package ru.md24inc.alembic.pervoc.gui;
 
 import ru.md24inc.alembic.pervoc.dao.VocabularyDao;
-import ru.md24inc.alembic.pervoc.domains.CardType;
-import ru.md24inc.alembic.pervoc.domains.TranscriptType;
-import ru.md24inc.alembic.pervoc.domains.TranslationType;
-import ru.md24inc.alembic.pervoc.domains.WordType;
+import ru.md24inc.alembic.pervoc.domains.Card;
+import ru.md24inc.alembic.pervoc.domains.Transcript;
+import ru.md24inc.alembic.pervoc.domains.Translation;
+import ru.md24inc.alembic.pervoc.domains.Word;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -38,7 +38,7 @@ public class MainWindow extends JFrame {
 	private JTable tableOfCards;
 	private JScrollPane scrollPaneForTableVoc;
 	private File file;
-	private List<CardType> cards;
+	private List<Card> cards;
 	private TranscriptPanel transcriptPanel;
 
 	/**
@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
 				fj.setAcceptAllFileFilterUsed(false);
 				if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
 					file = fj.getSelectedFile();
-					cards = (List<CardType>) new VocabularyDao().openFile(file.toString());
+					cards = new VocabularyDao().getVocabular(file.toString());
 					TableModel model = new CardTableModel(cards);
 					tableOfCards.setModel(model);
 					System.out.println("File - "+file.toString());
@@ -161,10 +161,10 @@ public class MainWindow extends JFrame {
 		setJMenuBar(menuBar);
 
 		// Creating and Adding Table with Vocabulary into main Frame
-        cards = new ArrayList<CardType>();
-        cards.add(new CardType());
-        cards.add(new CardType());
-        cards.add(new CardType());
+        cards = new ArrayList<Card>();
+//        cards.add(new Card("","",""));
+        cards.add(new Card());
+//        cards.add(new Card());
         TableModel model1 = new CardTableModel(cards);
 		tableOfCards = new JTable();
         tableOfCards.setModel(model1);
@@ -185,9 +185,9 @@ public class MainWindow extends JFrame {
 
 		private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 		private String[] colNames = { "Word", "Transcript", "Translation" };
-		private List<CardType> beans;
+		private List<Card> beans;
 
-		public CardTableModel(List<CardType> beans) {
+		public CardTableModel(List<Card> beans) {
 			this.beans = beans;
 		}
 
@@ -199,11 +199,11 @@ public class MainWindow extends JFrame {
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			if (colNames[columnIndex].equalsIgnoreCase("Word"))
-				return WordType.class;
+				return Word.class;
 			else if (colNames[columnIndex].equalsIgnoreCase("Transcript"))
-				return TranscriptType.class;
+				return Transcript.class;
 			else if (colNames[columnIndex].equalsIgnoreCase("Translation"))
-				return TranslationType.class;
+				return Translation.class;
 			else
 				return null;
 		}
@@ -225,14 +225,14 @@ public class MainWindow extends JFrame {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			CardType bean = beans.get(rowIndex);
+			Card bean = beans.get(rowIndex);
 			switch (columnIndex) {
 			case 0:
-				return bean.getWord();
+				return bean.getWord().getValue();
 			case 1:
-				return bean.getTranscript();
+				return bean.getTranscript().getValue();
 			case 2:
-				return bean.getTranslation();
+				return bean.getTranslation().getValue();
 			}
 			return "";
 		}
@@ -249,7 +249,7 @@ public class MainWindow extends JFrame {
 
 		@Override
 		public void setValueAt(Object value, int rowIndex, int columnIndex) {
-			 beans.set(rowIndex, (CardType) value);
+			 beans.set(rowIndex, (Card) value);
 //			 fireTableCellUpdated(rowIndex, columnIndex);
 		}
 

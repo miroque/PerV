@@ -16,12 +16,12 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for translationType complex type.
+ * <p>Java class for wordType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="translationType">
+ * &lt;complexType name="wordType">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *       &lt;attribute name="lang" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "translationType", propOrder = {
+@XmlType(name = "wordType", propOrder = {
     "value"
 })
-public class TranslationType {
+public class Word {
 
     @XmlValue
     protected String value;

@@ -41,9 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "vocabularyType", propOrder = {
     "card"
 })
-public class VocabularyType {
+public class Vocabulary {
 	
-    protected List<CardType> card;
+    protected List<Card> card;
 
     /**
      * Gets the value of the card property.
@@ -63,13 +63,13 @@ public class VocabularyType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link CardType }
+     * {@link Card }
      * 
      * 
      */
-    public List<CardType> getCard() {
+    public List<Card> getCard() {
         if (card == null) {
-            card = new ArrayList<CardType>();
+            card = new ArrayList<Card>();
         }
         return this.card;
     }

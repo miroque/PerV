@@ -43,26 +43,34 @@ import javax.xml.bind.annotation.XmlType;
     "transcript",
     "translation"
 })
-public class CardType {
+public class Card {
 
     @XmlElement(required = true)
-    protected WordType word;
+    protected Word word = new Word();
     @XmlElement(required = true)
-    protected TranscriptType transcript;
+    protected Transcript transcript = new Transcript();
     @XmlElement(required = true)
-    protected TranslationType translation;
+    protected Translation translation = new Translation();
     @XmlAttribute(required = true)
     protected String date;
 
-    /**
+    public Card(String string, String string2, String string3) {
+    	word.setValue(string);
+    	transcript.setValue(string2);
+    	translation.setValue(string3);
+	}
+    public Card() {
+    }
+
+	/**
      * Gets the value of the word property.
      * 
      * @return
      *     possible object is
-     *     {@link WordType }
+     *     {@link Word }
      *     
      */
-    public WordType getWord() {
+    public Word getWord() {
         return word;
     }
 
@@ -71,10 +79,10 @@ public class CardType {
      * 
      * @param value
      *     allowed object is
-     *     {@link WordType }
+     *     {@link Word }
      *     
      */
-    public void setWord(WordType value) {
+    public void setWord(Word value) {
         this.word = value;
     }
 
@@ -83,10 +91,10 @@ public class CardType {
      * 
      * @return
      *     possible object is
-     *     {@link TranscriptType }
+     *     {@link Transcript }
      *     
      */
-    public TranscriptType getTranscript() {
+    public Transcript getTranscript() {
         return transcript;
     }
 
@@ -95,10 +103,10 @@ public class CardType {
      * 
      * @param value
      *     allowed object is
-     *     {@link TranscriptType }
+     *     {@link Transcript }
      *     
      */
-    public void setTranscript(TranscriptType value) {
+    public void setTranscript(Transcript value) {
         this.transcript = value;
     }
 
@@ -107,10 +115,10 @@ public class CardType {
      * 
      * @return
      *     possible object is
-     *     {@link TranslationType }
+     *     {@link Translation }
      *     
      */
-    public TranslationType getTranslation() {
+    public Translation getTranslation() {
         return translation;
     }
 
@@ -119,10 +127,10 @@ public class CardType {
      * 
      * @param value
      *     allowed object is
-     *     {@link TranslationType }
+     *     {@link Translation }
      *     
      */
-    public void setTranslation(TranslationType value) {
+    public void setTranslation(Translation value) {
         this.translation = value;
     }
 

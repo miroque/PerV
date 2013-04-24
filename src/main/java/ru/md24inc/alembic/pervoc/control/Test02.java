@@ -13,30 +13,30 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import ru.md24inc.alembic.pervoc.domains.CardType;
+import ru.md24inc.alembic.pervoc.domains.Card;
 import ru.md24inc.alembic.pervoc.domains.ObjectFactory;
-import ru.md24inc.alembic.pervoc.domains.TranscriptType;
-import ru.md24inc.alembic.pervoc.domains.TranslationType;
-import ru.md24inc.alembic.pervoc.domains.VocabularyType;
-import ru.md24inc.alembic.pervoc.domains.WordType;
+import ru.md24inc.alembic.pervoc.domains.Transcript;
+import ru.md24inc.alembic.pervoc.domains.Translation;
+import ru.md24inc.alembic.pervoc.domains.Vocabulary;
+import ru.md24inc.alembic.pervoc.domains.Word;
 
 public class Test02 {
 	public static void main(String args[]) throws JAXBException {
 		ObjectFactory of = new ObjectFactory();
 		
-		VocabularyType vocabulary = of.createVocabularyType();
+		Vocabulary vocabulary = of.createVocabularyType();
 
-		CardType card = of.createCardType();
+		Card card = of.createCardType();
 		card.setDate(new GregorianCalendar().getInstance().getTime().toString());
 		
-		WordType word = of.createWordType();
+		Word word = of.createWordType();
 		word.setLang("en");
 		word.setValue("ser");
 
-		TranscriptType transcript = of.createTranscriptType();
+		Transcript transcript = of.createTranscriptType();
 		transcript.setValue("234jfaa");
 		
-		TranslationType translation = of.createTranslationType();
+		Translation translation = of.createTranslationType();
 		translation.setLang("ru");
 		translation.setValue("сер");
 		
@@ -44,16 +44,16 @@ public class Test02 {
 		card.setTranscript(transcript);
 		card.setTranslation(translation);
 		
-		CardType card2 = of.createCardType();
+		Card card2 = of.createCardType();
 		card2.setDate(new GregorianCalendar().getInstance().getTime().toString());
 		
-		WordType word2 = of.createWordType();
+		Word word2 = of.createWordType();
 		word2.setLang("en");
 		word2.setValue("cat");
 
-		TranscriptType transcript2 = of.createTranscriptType();
+		Transcript transcript2 = of.createTranscriptType();
 		transcript2.setValue("cat");
-		TranslationType translation2 = of.createTranslationType();
+		Translation translation2 = of.createTranslationType();
 		translation2.setLang("ru");
 		translation2.setValue("кот");
 
@@ -64,7 +64,7 @@ public class Test02 {
 		vocabulary.getCard().add(card);
 		vocabulary.getCard().add(card2);
 		
-		JAXBContext jaxbContext = JAXBContext.newInstance(VocabularyType.class);
+		JAXBContext jaxbContext = JAXBContext.newInstance(Vocabulary.class);
 		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
  
 		// output pretty printed
@@ -80,8 +80,8 @@ public class Test02 {
 		Unmarshaller um  = jaxbContext.createUnmarshaller();
 		try {
 //			VocabularyType myVoc = (VocabularyType) um.unmarshal(new FileReader("C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\Musrum.xml"));
-			VocabularyType myVoc = (VocabularyType) um.unmarshal(new FileReader("C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\mud.xml"));
-			List<CardType> vc = myVoc.getCard();
+			Vocabulary myVoc = (Vocabulary) um.unmarshal(new FileReader("C:\\Users\\panov\\workspaces\\experiz\\PerV\\Xclay\\mud.xml"));
+			List<Card> vc = myVoc.getCard();
 			System.out.println(vc.toString());
 		} catch (FileNotFoundException e) {
 			//I guess that one of the solution is 

@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlType(name = "transcriptType", propOrder = {
     "value"
 })
-public class TranscriptType {
+public class Transcript {
 
     @XmlValue
     protected String value;

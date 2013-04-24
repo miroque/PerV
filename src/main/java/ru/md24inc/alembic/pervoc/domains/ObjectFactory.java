@@ -41,52 +41,52 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TranslationType }
+     * Create an instance of {@link Translation }
      * 
      */
-    public TranslationType createTranslationType() {
-        return new TranslationType();
+    public Translation createTranslationType() {
+        return new Translation();
     }
 
     /**
-     * Create an instance of {@link CardType }
+     * Create an instance of {@link Card }
      * 
      */
-    public CardType createCardType() {
-        return new CardType();
+    public Card createCardType() {
+        return new Card();
     }
 
     /**
-     * Create an instance of {@link WordType }
+     * Create an instance of {@link Word }
      * 
      */
-    public WordType createWordType() {
-        return new WordType();
+    public Word createWordType() {
+        return new Word();
     }
 
     /**
-     * Create an instance of {@link TranscriptType }
+     * Create an instance of {@link Transcript }
      * 
      */
-    public TranscriptType createTranscriptType() {
-        return new TranscriptType();
+    public Transcript createTranscriptType() {
+        return new Transcript();
     }
 
     /**
-     * Create an instance of {@link VocabularyType }
+     * Create an instance of {@link Vocabulary }
      * 
      */
-    public VocabularyType createVocabularyType() {
-        return new VocabularyType();
+    public Vocabulary createVocabularyType() {
+        return new Vocabulary();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link VocabularyType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Vocabulary }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "", name = "vocabulary")
-    public JAXBElement<VocabularyType> createVocabulary(VocabularyType value) {
-        return new JAXBElement<VocabularyType>(_Vocabulary_QNAME, VocabularyType.class, null, value);
+    public JAXBElement<Vocabulary> createVocabulary(Vocabulary value) {
+        return new JAXBElement<Vocabulary>(_Vocabulary_QNAME, Vocabulary.class, null, value);
     }
 
 }
