@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PhoneticSymbols>
-	<Source>
-	<url>http://www.phon.ucl.ac.uk/home/wells/phoneticsymbolsforenglish_hex.htm</url>
-	</Source>
 	<Consonants>
 		<symbol sound="p" hint="pen, copy, happen">p</symbol>
 		<symbol sound="b" hint="back, baby, job">b</symbol>

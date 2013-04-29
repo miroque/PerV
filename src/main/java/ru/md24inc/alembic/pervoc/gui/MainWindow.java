@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -162,13 +164,33 @@ public class MainWindow extends JFrame {
 
 		// Creating and Adding Table with Vocabulary into main Frame
         cards = new ArrayList<Card>();
-//        cards.add(new Card("","",""));
         cards.add(new Card());
-//        cards.add(new Card());
         TableModel model1 = new CardTableModel(cards);
 		tableOfCards = new JTable();
         tableOfCards.setModel(model1);
+        tableOfCards.setAutoCreateColumnsFromModel(true);
 		scrollPaneForTableVoc = new JScrollPane(tableOfCards);
+		tableOfCards.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == java.awt.event.KeyEvent.VK_INSERT) {
+					cards.add(new Card());
+					tableOfCards.repaint();
+//					scrollPaneForTableVoc.repaint();
+					System.out.println(cards.size());
+					
+				}
+			}
+		});
         tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
 		tableOfCards.setFillsViewportHeight(true);
 		add(BorderLayout.CENTER, scrollPaneForTableVoc);
