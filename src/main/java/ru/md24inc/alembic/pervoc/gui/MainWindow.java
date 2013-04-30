@@ -1,10 +1,9 @@
 package ru.md24inc.alembic.pervoc.gui;
 
+import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang3.StringUtils;
 import ru.md24inc.alembic.pervoc.dao.VocabularyDao;
 import ru.md24inc.alembic.pervoc.domains.Card;
-import ru.md24inc.alembic.pervoc.domains.Transcript;
-import ru.md24inc.alembic.pervoc.domains.Translation;
-import ru.md24inc.alembic.pervoc.domains.Word;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -13,10 +12,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author miroque
@@ -92,9 +89,7 @@ public class MainWindow extends JFrame {
                             ext = extension.substring(i + 1).toLowerCase();
                         }
                         fj.setCurrentDirectory(f);
-                        if ("pvoc".equals(ext))
-                            return true;
-                        return false;
+                        return StringUtils.equals(ext, "pvoc");
                     }
 
                     @Override
@@ -197,10 +192,14 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    private class CardTableModel implements TableModel {
+    private static class CardTableModel implements TableModel {
 
         private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
-        private String[] colNames = {"Word", "Transcript", "Translation"};
+        private static final Map<Integer, ColumnType> index2column = ImmutableMap.<Integer, ColumnType> builder()
+                .put(0, ColumnType.WORD)
+                .put(1, ColumnType.TRANSCRIPT)
+                .put(2, ColumnType.TRANSLATION)
+                .build();
         private List<Card> beans;
 
         public CardTableModel(List<Card> beans) {
@@ -214,24 +213,17 @@ public class MainWindow extends JFrame {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            if (colNames[columnIndex].equalsIgnoreCase("Word"))
-                return Word.class;
-            else if (colNames[columnIndex].equalsIgnoreCase("Transcript"))
-                return Transcript.class;
-            else if (colNames[columnIndex].equalsIgnoreCase("Translation"))
-                return Translation.class;
-            else
-                return null;
+            return index2column.get(columnIndex).getClazz();
         }
 
         @Override
         public int getColumnCount() {
-            return colNames.length;
+            return index2column.size();
         }
 
         @Override
         public String getColumnName(int columnIndex) {
-            return colNames[columnIndex];
+            return index2column.get(columnIndex).getName();
         }
 
         @Override
@@ -242,15 +234,7 @@ public class MainWindow extends JFrame {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             Card bean = beans.get(rowIndex);
-            switch (columnIndex) {
-                case 0:
-                    return bean.getWord().getValue();
-                case 1:
-                    return bean.getTranscript().getValue();
-                case 2:
-                    return bean.getTranslation().getValue();
-            }
-            return "";
+            return index2column.get(columnIndex).getValue(bean);
         }
 
         @Override
