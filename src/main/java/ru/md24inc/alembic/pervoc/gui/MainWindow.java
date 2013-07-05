@@ -8,6 +8,7 @@ import ru.md24inc.alembic.pervoc.domains.Card;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -109,27 +110,7 @@ public class MainWindow extends JFrame {
         menuFileItemOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                fj.addChoosableFileFilter(new FileFilter() {
-                    @Override
-                    public boolean accept(File f) {
-                        if (f.isDirectory()) {
-                            return true;
-                        }
-                        String ext = null;
-                        String extension = f.getName();
-                        int i = extension.lastIndexOf('.');
-                        if (i > 0 && i < extension.length() - 1) {
-                            ext = extension.substring(i + 1).toLowerCase();
-                        }
-                        fj.setCurrentDirectory(f);
-                        return StringUtils.equals(ext, "pvoc");
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return "Personal Vocabular Files";
-                    }
-                });
+                fj.addChoosableFileFilter(new FileNameExtensionFilter("Personal Vocabular Files", "pvoc"));
                 fj.setAcceptAllFileFilterUsed(false);
                 if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
                     file = fj.getSelectedFile();
