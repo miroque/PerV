@@ -19,17 +19,8 @@ import java.util.List;
  * @author miroque
  */
 public class MainWindow extends JFrame {
-    // Variables declaration
-    private JMenuBar menuBar;
-    private JMenu menuFile;
-    private JMenu menuViews;
-    private JMenuItem menuFileItemOpen;
-    private JMenuItem menuFileItemQuit;
-    private JMenuItem menuFileItemSave;
-    private JMenuItem menuViewsItemTscript;
     private JFileChooser fj;
     private JTable tableOfCards;
-    private JScrollPane scrollPaneForTableVoc;
     private File file;
     private List<Card> cards;
     private TranscriptPanel transcriptPanel;
@@ -64,11 +55,11 @@ public class MainWindow extends JFrame {
         // max size not set
 
         // Creating bar for menu
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
 
         // Creating first menu named "File"
-        menuFile = new JMenu("File");
-        menuFileItemOpen = new JMenuItem("Open...");
+        JMenu menuFile = new JMenu("File");
+        JMenuItem menuFileItemOpen = new JMenuItem("Open...");
         menuFileItemOpen.setAccelerator(KeyStroke.getKeyStroke(
                 java.awt.event.KeyEvent.VK_O,
                 java.awt.event.InputEvent.CTRL_MASK));
@@ -109,13 +100,13 @@ public class MainWindow extends JFrame {
             }
         });
         menuFile.add(menuFileItemOpen);
-        menuFileItemSave = new JMenuItem("Save...");
+        JMenuItem menuFileItemSave = new JMenuItem("Save...");
         menuFileItemSave.setAccelerator(KeyStroke.getKeyStroke(
                 java.awt.event.KeyEvent.VK_S,
                 java.awt.event.InputEvent.CTRL_MASK));
         menuFile.add(menuFileItemSave);
         menuFile.add(new JPopupMenu.Separator());
-        menuFileItemQuit = new JMenuItem("Quit");
+        JMenuItem menuFileItemQuit = new JMenuItem("Quit");
         menuFileItemQuit.setAccelerator(KeyStroke.getKeyStroke(
                 java.awt.event.KeyEvent.VK_Q,
                 java.awt.event.InputEvent.CTRL_MASK));
@@ -131,8 +122,8 @@ public class MainWindow extends JFrame {
         menuBar.add(menuFile);
 
         // Creating second menu named "Views"
-        menuViews = new JMenu("Views");
-        menuViewsItemTscript = new JMenuItem("Transcript");
+        JMenu menuViews = new JMenu("Views");
+        JMenuItem menuViewsItemTscript = new JMenuItem("Transcript");
         menuViewsItemTscript.setAccelerator(KeyStroke.getKeyStroke(
                 java.awt.event.KeyEvent.VK_T,
                 java.awt.event.InputEvent.CTRL_MASK
@@ -158,7 +149,7 @@ public class MainWindow extends JFrame {
         tableOfCards = new JTable();
         tableOfCards.setModel(model1);
         tableOfCards.setAutoCreateColumnsFromModel(true);
-        scrollPaneForTableVoc = new JScrollPane(tableOfCards);
+        JScrollPane scrollPaneForTableVoc = new JScrollPane(tableOfCards);
         tableOfCards.addKeyListener(new KeyListener() {
 
             @Override
@@ -252,6 +243,5 @@ public class MainWindow extends JFrame {
             beans.set(rowIndex, (Card) value);
 //			 fireTableCellUpdated(rowIndex, columnIndex);
         }
-
     }
 }

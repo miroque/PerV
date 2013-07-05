@@ -19,7 +19,7 @@ public class TranscriptPanel extends JPanel {
 	List<Object> vowels;
 	List<Object> special;
 	Border border;
-    JTable typeIn=null;
+    JTable typeIn;
 
     public TranscriptPanel() {
 		initSymbols();
@@ -92,7 +92,6 @@ public class TranscriptPanel extends JPanel {
         @Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
         private void typeInActiveCell(JLabel ex) {
@@ -110,28 +109,24 @@ public class TranscriptPanel extends JPanel {
         @Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-
 		}
-
 	}
 
 	public void paintComponent(Graphics g) {
 
 	}
+
     public void addTypeIn(JTable typeIn){
         this.typeIn = typeIn;
     }
-
 }
