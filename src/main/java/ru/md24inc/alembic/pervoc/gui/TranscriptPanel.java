@@ -51,38 +51,34 @@ public class TranscriptPanel extends JPanel {
 	}
 
 	class SymbolRow extends JPanel implements MouseListener {
-		JLabel header;
-		JLabel symbolsHolder;
 		Border fronties = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1);
-		GridLayout layoutForSymbols;
-		BorderLayout layoutForAll;
-		JPanel headerPanel;
-		JPanel symbolsPanel;
 
-		public  SymbolRow(String h, List<Object> in, Color color) {
-			layoutForSymbols = new GridLayout(0, 10, 2, 2);
-			layoutForAll = new BorderLayout(5, 5);
-			headerPanel = new JPanel();
-			symbolsPanel = new JPanel(layoutForSymbols);
-			header = new JLabel();
-			setLayout(layoutForAll);
-			add(headerPanel, BorderLayout.WEST);
+		public SymbolRow(String h, List<Object> in, Color color) {
+            setLayout(new BorderLayout(5, 5));
+
+            JPanel headerPanel = new JPanel();
+            headerPanel.add(new JLabel(h));
+            add(headerPanel, BorderLayout.WEST);
+
+            JPanel symbolsPanel = new JPanel(new GridLayout(0, 10, 2, 2));
+            for (Object ob : in) {
+                symbolsPanel.add(createSymbolLabel(ob, color));
+            }
 			add(symbolsPanel, BorderLayout.CENTER);
-			header.setText(h);
-			headerPanel.add(header);
-			for (Object ob:in){
-				symbolsHolder = new JLabel(ob.toString());
-				symbolsHolder.setBorder(fronties);
-				symbolsHolder.setForeground(color);
-				symbolsHolder.setToolTipText("Here will bee hint");
-				symbolsHolder.addMouseListener(this);
-				symbolsHolder.setHorizontalAlignment(JLabel.CENTER);
-				symbolsHolder.setFont(new Font(Font.SANS_SERIF, Font.PLAIN,16));
-				symbolsPanel.add(symbolsHolder);
-			}
 		}
 
-		@Override
+        private JLabel createSymbolLabel(Object ob, Color color) {
+            JLabel symbolsHolder = new JLabel(ob.toString());
+            symbolsHolder.setBorder(fronties);
+            symbolsHolder.setForeground(color);
+            symbolsHolder.setToolTipText("Here will be hint");
+            symbolsHolder.addMouseListener(this);
+            symbolsHolder.setHorizontalAlignment(JLabel.CENTER);
+            symbolsHolder.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+            return symbolsHolder;
+        }
+
+        @Override
 		public void mouseClicked(MouseEvent e) {
 			JLabel ex = (JLabel) e.getComponent();
 			System.out.print(ex.getText() + " ");

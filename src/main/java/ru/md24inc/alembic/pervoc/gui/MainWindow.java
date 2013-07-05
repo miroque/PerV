@@ -19,11 +19,11 @@ import java.util.List;
  * @author miroque
  */
 public class MainWindow extends JFrame {
-    private JFileChooser fj;
-    private JTable tableOfCards;
+    private JFileChooser fj = new JFileChooser();
+    private JTable tableOfCards = new JTable();
     private File file;
-    private List<Card> cards;
-    private TranscriptPanel transcriptPanel;
+    private List<Card> cards = new ArrayList<Card>();
+    private TranscriptPanel transcriptPanel = new TranscriptPanel();
 
     /**
      * Creates new form MainWindow
@@ -50,20 +50,62 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Making min. and max sizes.
-        Dimension minSize = new Dimension(300, 450);
-        setMinimumSize(minSize);
+        setMinimumSize(new Dimension(300, 450));
         // max size not set
 
         // Creating bar for menu
-        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(createMenuBar());
 
-        // Creating first menu named "File"
+        // Creating and Adding Table with Vocabulary into main Frame
+        add(BorderLayout.CENTER, createCardsScrollPane());
+        add(BorderLayout.NORTH, createTranscriptPanel());
+
+        setVisible(true);
+    }
+
+    private JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(createFileMenu());
+        menuBar.add(createViewsMenu());
+        return menuBar;
+    }
+
+    private JMenu createFileMenu() {
         JMenu menuFile = new JMenu("File");
+        menuFile.add(createOpenMenuItem());
+        menuFile.add(createSaveMenuItem());
+        menuFile.add(new JPopupMenu.Separator());
+        menuFile.add(createQuitMenuItem());
+        return menuFile;
+    }
+
+    private JMenuItem createQuitMenuItem() {
+        JMenuItem menuFileItemQuit = new JMenuItem("Quit");
+        menuFileItemQuit.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q,
+                InputEvent.CTRL_MASK));
+        menuFileItemQuit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        return menuFileItemQuit;
+    }
+
+    private JMenuItem createSaveMenuItem() {
+        JMenuItem menuFileItemSave = new JMenuItem("Save...");
+        menuFileItemSave.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S,
+                InputEvent.CTRL_MASK));
+        return menuFileItemSave;
+    }
+
+    private JMenuItem createOpenMenuItem() {
         JMenuItem menuFileItemOpen = new JMenuItem("Open...");
         menuFileItemOpen.setAccelerator(KeyStroke.getKeyStroke(
-                java.awt.event.KeyEvent.VK_O,
-                java.awt.event.InputEvent.CTRL_MASK));
-        fj = new JFileChooser();
+                KeyEvent.VK_O,
+                InputEvent.CTRL_MASK));
         menuFileItemOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,57 +141,33 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        menuFile.add(menuFileItemOpen);
-        JMenuItem menuFileItemSave = new JMenuItem("Save...");
-        menuFileItemSave.setAccelerator(KeyStroke.getKeyStroke(
-                java.awt.event.KeyEvent.VK_S,
-                java.awt.event.InputEvent.CTRL_MASK));
-        menuFile.add(menuFileItemSave);
-        menuFile.add(new JPopupMenu.Separator());
-        JMenuItem menuFileItemQuit = new JMenuItem("Quit");
-        menuFileItemQuit.setAccelerator(KeyStroke.getKeyStroke(
-                java.awt.event.KeyEvent.VK_Q,
-                java.awt.event.InputEvent.CTRL_MASK));
-        menuFileItemQuit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        menuFile.add(menuFileItemQuit);
+        return menuFileItemOpen;
+    }
 
-        // Adding menu File to Bar menu
-        menuBar.add(menuFile);
-
-        // Creating second menu named "Views"
+    private JMenu createViewsMenu() {
         JMenu menuViews = new JMenu("Views");
+        menuViews.add(createTranscriptMenuItem());
+        return menuViews;
+    }
+
+    private JMenuItem createTranscriptMenuItem() {
         JMenuItem menuViewsItemTscript = new JMenuItem("Transcript");
         menuViewsItemTscript.setAccelerator(KeyStroke.getKeyStroke(
-                java.awt.event.KeyEvent.VK_T,
-                java.awt.event.InputEvent.CTRL_MASK
-                        | java.awt.event.InputEvent.SHIFT_MASK));
+                KeyEvent.VK_T,
+                InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
         menuViewsItemTscript.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 transcriptPanel.setVisible(!transcriptPanel.isVisible());
             }
         });
-        menuViews.add(menuViewsItemTscript);
+        return menuViewsItemTscript;
+    }
 
-        // Adding menu Views to Bar menu
-        menuBar.add(menuViews);
-
-        // Adding menu bar in our main frame
-        setJMenuBar(menuBar);
-
-        // Creating and Adding Table with Vocabulary into main Frame
-        cards = new ArrayList<Card>();
+    private JScrollPane createCardsScrollPane() {
         cards.add(new Card());
-        TableModel model1 = new CardTableModel(cards);
-        tableOfCards = new JTable();
-        tableOfCards.setModel(model1);
+        tableOfCards.setModel(new CardTableModel(cards));
         tableOfCards.setAutoCreateColumnsFromModel(true);
-        JScrollPane scrollPaneForTableVoc = new JScrollPane(tableOfCards);
         tableOfCards.addKeyListener(new KeyListener() {
 
             @Override
@@ -162,7 +180,7 @@ public class MainWindow extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_INSERT) {
+                if (e.getKeyCode() == KeyEvent.VK_INSERT) {
                     cards.add(new Card());
                     tableOfCards.repaint();
 //					scrollPaneForTableVoc.repaint();
@@ -173,14 +191,13 @@ public class MainWindow extends JFrame {
         });
         tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
         tableOfCards.setFillsViewportHeight(true);
-        add(BorderLayout.CENTER, scrollPaneForTableVoc);
-        transcriptPanel = new TranscriptPanel();
+        return new JScrollPane(tableOfCards);
+    }
+
+    private TranscriptPanel createTranscriptPanel() {
         transcriptPanel.setVisible(false);
         transcriptPanel.addTypeIn(tableOfCards);
-        add(BorderLayout.NORTH, transcriptPanel);
-
-        // frame.pack();
-        setVisible(true);
+        return transcriptPanel;
     }
 
     private static class CardTableModel implements TableModel {
