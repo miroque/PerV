@@ -4,10 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import ru.md24inc.alembic.pervoc.dao.VocabularyDao;
 import ru.md24inc.alembic.pervoc.domains.Card;
-
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author miroque
  */
 public class MainWindow extends JFrame {
+//<<<<<<< HEAD
     // Variables declaration
     private JMenuBar menuBar;
     private JMenu menuFile;
@@ -100,7 +102,7 @@ public class MainWindow extends JFrame {
                 fj.setAcceptAllFileFilterUsed(false);
                 if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
                     file = fj.getSelectedFile();
-                    cards = new VocabularyDao().getVocabular(file.toString());
+                    cards = new VocabularyDao().getVocabular(file.toString()).getCards();
                     TableModel model = new CardTableModel(cards);
                     tableOfCards.setModel(model);
                     System.out.println("File - " + file.toString());
@@ -180,12 +182,14 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+
         tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
         tableOfCards.setFillsViewportHeight(true);
         add(BorderLayout.CENTER, scrollPaneForTableVoc);
         transcriptPanel = new TranscriptPanel();
         transcriptPanel.setVisible(false);
         transcriptPanel.addTypeIn(tableOfCards);
+//<<<<<<< HEAD
         add(BorderLayout.NORTH, transcriptPanel);
 
         // frame.pack();
@@ -254,4 +258,5 @@ public class MainWindow extends JFrame {
         }
 
     }
+
 }

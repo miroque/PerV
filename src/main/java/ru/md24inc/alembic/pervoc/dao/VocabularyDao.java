@@ -43,20 +43,19 @@ public class VocabularyDao {
 	 * @param fileName
 	 *            String for source XML file
 	 */
-	public List<Card> getVocabular(String fileName) {
-		List<Card> result = null;
+	public Vocabulary getVocabular(String fileName) {
+		Vocabulary myVoc = null;
 		try {
 			final JAXBContext jaxbContext = JAXBContext.newInstance(Vocabulary.class);
 			final Unmarshaller um = jaxbContext.createUnmarshaller();
-			Vocabulary myVoc = (Vocabulary) um.unmarshal(new FileReader(fileName));
-			result = myVoc.getCard();
-			System.out.println(result.toString());
+			myVoc = (Vocabulary) um.unmarshal(new FileReader(fileName));
+			System.out.println(myVoc.getCards());
 		} catch (Exception e) {
 			// I guess that one of the solution is
 			// converting this input file to UTF-8 without BOM
 			e.printStackTrace();
 		}
-		return result;
+		return myVoc;
 	}
 
 }
