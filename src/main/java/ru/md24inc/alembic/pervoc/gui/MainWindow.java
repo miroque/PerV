@@ -1,20 +1,36 @@
 package ru.md24inc.alembic.pervoc.gui;
 
-import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang3.StringUtils;
-import ru.md24inc.alembic.pervoc.dao.VocabularyDao;
-import ru.md24inc.alembic.pervoc.domains.Card;
-import javax.swing.*;
-import javax.swing.event.TableModelListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
+import java.util.List;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.util.*;
-import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import ru.md24inc.alembic.pervoc.dao.VocabularyDao;
+import ru.md24inc.alembic.pervoc.domains.Card;
+import ru.md24inc.alembic.pervoc.domains.Transcript;
+import ru.md24inc.alembic.pervoc.domains.Translation;
+import ru.md24inc.alembic.pervoc.domains.Vocabulary;
+import ru.md24inc.alembic.pervoc.domains.Word;
 
 /**
  * @author miroque
@@ -25,6 +41,7 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu menuFile;
     private JMenu menuViews;
+	private JMenuItem menuFileItemNew;
     private JMenuItem menuFileItemOpen;
     private JMenuItem menuFileItemQuit;
     private JMenuItem menuFileItemSave;
@@ -35,6 +52,7 @@ public class MainWindow extends JFrame {
     private File file;
     private List<Card> cards;
     private TranscriptPanel transcriptPanel;
+	private Vocabulary vocabulary;
 
     /**
      * Creates new form MainWindow
@@ -70,6 +88,20 @@ public class MainWindow extends JFrame {
 
         // Creating first menu named "File"
         menuFile = new JMenu("File");
+        menuFileItemNew = new JMenuItem("New");
+		menuFileItemNew.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_N,
+				java.awt.event.InputEvent.CTRL_MASK));
+		menuFileItemNew.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				vocabulary = new Vocabulary();
+				vocabulary.getCards().add(new Card());
+				tableOfCards.setModel(new VocaTableModel(vocabulary));
+				tableOfCards.repaint();
+			}
+		});
+		menuFile.add(menuFileItemNew);
         menuFileItemOpen = new JMenuItem("Open...");
         menuFileItemOpen.setAccelerator(KeyStroke.getKeyStroke(
                 java.awt.event.KeyEvent.VK_O,
@@ -102,11 +134,7 @@ public class MainWindow extends JFrame {
                 fj.setAcceptAllFileFilterUsed(false);
                 if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
                     file = fj.getSelectedFile();
-                    cards = new VocabularyDao().getVocabular(file.toString()).getCards();
-                    TableModel model = new CardTableModel(cards);
-                    tableOfCards.setModel(model);
-                    System.out.println("File - " + file.toString());
-                    System.out.println(cards.size());
+                    tableOfCards.setModel(new VocaTableModel(new VocabularyDao().getVocabular(file.toString())));
                 }
             }
         });
@@ -154,11 +182,10 @@ public class MainWindow extends JFrame {
         setJMenuBar(menuBar);
 
         // Creating and Adding Table with Vocabulary into main Frame
-        cards = new ArrayList<Card>();
-        cards.add(new Card());
-        TableModel model1 = new CardTableModel(cards);
+        
         tableOfCards = new JTable();
-        tableOfCards.setModel(model1);
+        vocabulary = new Vocabulary();
+        tableOfCards.setModel(new VocaTableModel(vocabulary));
         tableOfCards.setAutoCreateColumnsFromModel(true);
         scrollPaneForTableVoc = new JScrollPane(tableOfCards);
         tableOfCards.addKeyListener(new KeyListener() {
@@ -174,11 +201,8 @@ public class MainWindow extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == java.awt.event.KeyEvent.VK_INSERT) {
-                    cards.add(new Card());
-                    tableOfCards.repaint();
-//					scrollPaneForTableVoc.repaint();
-                    System.out.println(cards.size());
-
+                	vocabulary.getCards().add(new Card());
+					tableOfCards.repaint();
                 }
             }
         });
@@ -196,67 +220,51 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    private static class CardTableModel implements TableModel {
+    private class VocaTableModel extends AbstractTableModel {
+		protected Vocabulary tmpVocabulary;
+		private String[] colNames = { "Word", "Transcript", "Translation" };
+		
+		public VocaTableModel(Vocabulary voc){
+			tmpVocabulary = voc;
+		}
 
-        private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
-        private static final Map<Integer, ColumnType> index2column = ImmutableMap.<Integer, ColumnType> builder()
-                .put(0, ColumnType.WORD)
-                .put(1, ColumnType.TRANSCRIPT)
-                .put(2, ColumnType.TRANSLATION)
-                .build();
-        private List<Card> beans;
+		@Override
+		public String getColumnName(int columnIndex) {
+			if (columnIndex < 0 || columnIndex > colNames.length)
+				return "ERROR";
+			else
+				return colNames[columnIndex];
+		}
+		
+		@Override
+		public int getRowCount() {
+			return tmpVocabulary.getCards().size();
+		}
 
-        public CardTableModel(List<Card> beans) {
-            this.beans = beans;
-        }
+		@Override
+		public int getColumnCount() {
+			return colNames.length;
+		}
 
-        @Override
-        public void addTableModelListener(TableModelListener listener) {
-            listeners.add(listener);
-        }
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			switch(columnIndex){
+			case 0: return tmpVocabulary.getCards().get(rowIndex).getWord().getValue(); 
+			case 1: return tmpVocabulary.getCards().get(rowIndex).getTranscript().getValue(); 
+			case 2: return tmpVocabulary.getCards().get(rowIndex).getTranslation().getValue();
+			default: return null;
+			}
+		}
 
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return index2column.get(columnIndex).getClazz();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return index2column.size();
-        }
-
-        @Override
-        public String getColumnName(int columnIndex) {
-            return index2column.get(columnIndex).getName();
-        }
-
-        @Override
-        public int getRowCount() {
-            return beans.size();
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            Card bean = beans.get(rowIndex);
-            return index2column.get(columnIndex).getValue(bean);
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return true;
-        }
-
-        @Override
-        public void removeTableModelListener(TableModelListener listener) {
-            listeners.remove(listener);
-        }
-
-        @Override
-        public void setValueAt(Object value, int rowIndex, int columnIndex) {
-            beans.set(rowIndex, (Card) value);
-//			 fireTableCellUpdated(rowIndex, columnIndex);
-        }
-
+		@Override
+		public Class<?> getColumnClass(int columnIndex){
+			switch(columnIndex){
+			case 0: return Word.class; 
+			case 1: return Transcript.class; 
+			case 2: return Translation.class;
+			default: return null;
+			}
+		}
     }
 
 }
