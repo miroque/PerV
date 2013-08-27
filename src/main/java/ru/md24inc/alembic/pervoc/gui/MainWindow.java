@@ -36,7 +36,6 @@ import ru.md24inc.alembic.pervoc.domains.Word;
  * @author miroque
  */
 public class MainWindow extends JFrame {
-//<<<<<<< HEAD
     // Variables declaration
     private JMenuBar menuBar;
     private JMenu menuFile;
@@ -50,7 +49,6 @@ public class MainWindow extends JFrame {
     private JTable tableOfCards;
     private JScrollPane scrollPaneForTableVoc;
     private File file;
-    private List<Card> cards;
     private TranscriptPanel transcriptPanel;
 	private Vocabulary vocabulary;
 
@@ -134,7 +132,8 @@ public class MainWindow extends JFrame {
                 fj.setAcceptAllFileFilterUsed(false);
                 if (fj.showDialog(null, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
                     file = fj.getSelectedFile();
-                    tableOfCards.setModel(new VocaTableModel(new VocabularyDao().getVocabular(file.toString())));
+                    vocabulary = new VocabularyDao().getVocabular(file.toString());
+                    tableOfCards.setModel(new VocaTableModel(vocabulary));
                 }
             }
         });
@@ -213,7 +212,6 @@ public class MainWindow extends JFrame {
         transcriptPanel = new TranscriptPanel();
         transcriptPanel.setVisible(false);
         transcriptPanel.addTypeIn(tableOfCards);
-//<<<<<<< HEAD
         add(BorderLayout.NORTH, transcriptPanel);
 
         // frame.pack();
@@ -228,6 +226,9 @@ public class MainWindow extends JFrame {
 			tmpVocabulary = voc;
 		}
 
+		public Vocabulary getD(){
+			return tmpVocabulary;
+		}
 		@Override
 		public String getColumnName(int columnIndex) {
 			if (columnIndex < 0 || columnIndex > colNames.length)
