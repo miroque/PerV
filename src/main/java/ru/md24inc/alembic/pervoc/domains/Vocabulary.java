@@ -74,6 +74,4 @@ public class Vocabulary {
         return this.card;
     }
     
-//    public Ve get
-
 }
