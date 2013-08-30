@@ -2,282 +2,247 @@ package ru.md24inc.alembic.pervoc.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.io.File;
+import java.util.*;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-import javax.swing.filechooser.FileFilter;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.collect.ImmutableMap;
 
 import ru.md24inc.alembic.pervoc.dao.VocabularyDao;
-import ru.md24inc.alembic.pervoc.domains.Card;
-import ru.md24inc.alembic.pervoc.domains.Transcript;
-import ru.md24inc.alembic.pervoc.domains.Translation;
-import ru.md24inc.alembic.pervoc.domains.Vocabulary;
-import ru.md24inc.alembic.pervoc.domains.Word;
+import ru.md24inc.alembic.pervoc.domains.*;
 
 /**
  * @author miroque
  */
 public class MainWindow extends JFrame {
-	// Variables declaration
-	private JMenuBar menuBar;
-	private JMenu menuFile;
-	private JMenu menuViews;
-	private JMenuItem menuFileItemNew;
-	private JMenuItem menuFileItemOpen;
-	private JMenuItem menuFileItemQuit;
-	private JMenuItem menuFileItemSave;
-	private JMenuItem menuViewsItemTscript;
-	private JFileChooser fj;
-	private JTable tableOfCards;
-	private JScrollPane scrollPaneForTableVoc;
-	private File file;
-	private TranscriptPanel transcriptPanel;
-	private Vocabulary vocabulary;
+    private JFileChooser fj = new JFileChooser();
+    private JTable tableOfCards = new JTable();
+    private File file;
+    private TranscriptPanel transcriptPanel = new TranscriptPanel();
+    private Vocabulary vocabulary;
 
-	/**
-	 * Creates new form MainWindow
-	 */
-	public MainWindow() {
-		initComponents();
-	}
+    /**
+     * Creates new form MainWindow
+     */
+    public MainWindow() {
+        initComponents();
+    }
 
-	public static void main(String[] args) {
-		// Schedule a job for the event-dispatching thread:
-		// creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new MainWindow().setVisible(true);
-			}
-		});
-	}
+    public static void main(String[] args) {
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI.
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MainWindow().setVisible(true);
+            }
+        });
+    }
 
-	private void initComponents() {
-		// Creating main frame and giving it title
-		// Personal Vocabular with def.action on exit.
-		setTitle("Personal Vocabulary (version 0.10)");
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    private void initComponents() {
+        // Creating main frame and giving it title
+        // Personal Vocabular with def.action on exit.
+        setTitle("Personal Vocabulary (version 0.10)");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		// Making min. and max sizes.
-		Dimension minSize = new Dimension(300, 450);
-		setMinimumSize(minSize);
-		// max size not set
+        // Making min. and max sizes.
+        setMinimumSize(new Dimension(300, 450));
+        // max size not set
 
-		// Creating bar for menu
-		menuBar = new JMenuBar();
+        // Creating bar for menu
+        setJMenuBar(createMenuBar());
 
-		// Creating first menu named "File"
-		menuFile = new JMenu("File");
-		menuFileItemNew = new JMenuItem("New");
-		menuFileItemNew.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N,
-				java.awt.event.InputEvent.CTRL_MASK));
-		menuFileItemNew.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				vocabulary = new Vocabulary();
-				vocabulary.getCards().add(new Card());
-				tableOfCards.setModel(new VocaTableModel(vocabulary));
-				tableOfCards.repaint();
-			}
-		});
-		menuFile.add(menuFileItemNew);
-		menuFileItemOpen = new JMenuItem("Open...");
-		menuFileItemOpen.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
-				java.awt.event.InputEvent.CTRL_MASK));
-		fj = new JFileChooser();
-		fj.addChoosableFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(File f) {
-				if (f.isDirectory()) {
-					return true;
-				}
-				String ext = null;
-				String extension = f.getName();
-				int i = extension.lastIndexOf('.');
-				if (i > 0 && i < extension.length() - 1) {
-					ext = extension.substring(i + 1).toLowerCase();
-				}
-				fj.setCurrentDirectory(f);
-				return StringUtils.equals(ext, "pvoc");
-			}
+        // Creating and Adding Table with Vocabulary into main Frame
+        add(BorderLayout.CENTER, createCardsScrollPane());
+        add(BorderLayout.NORTH, createTranscriptPanel());
 
-			@Override
-			public String getDescription() {
-				return "Personal Vocabular Files";
-			}
-		});
-		menuFileItemOpen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fj.setAcceptAllFileFilterUsed(false);
-				if (fj.showDialog(MainWindow.this, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
-					file = fj.getSelectedFile();
-					vocabulary = new VocabularyDao().getVocabular(file.toString());
-					tableOfCards.setModel(new VocaTableModel(vocabulary));
-				}
-			}
-		});
-		menuFile.add(menuFileItemOpen);
-		menuFileItemSave = new JMenuItem("Save...");
-		menuFileItemSave.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
-				java.awt.event.InputEvent.CTRL_MASK));
-		menuFileItemSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+        // frame.pack();
+        setVisible(true);
+    }
+
+    private JMenuBar createMenuBar() {
+        final JMenuBar menuBar = new JMenuBar();
+        menuBar.add(createFileMenu());
+        menuBar.add(createViewsMenu());
+        return menuBar;
+    }
+
+    private JMenu createFileMenu() {
+        final JMenu menuFile = new JMenu("File");
+        menuFile.add(createNewMenuItem());
+        menuFile.add(createOpenMenuItem());
+        menuFile.add(createSaveMenuItem());
+        menuFile.add(new JPopupMenu.Separator());
+        menuFile.add(createQuitMenuItem());
+        return menuFile;
+    }
+
+    private JMenuItem createNewMenuItem() {
+        final JMenuItem itemNew = new JMenuItem("New");
+        itemNew.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N,
+                InputEvent.CTRL_MASK));
+        itemNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vocabulary = new Vocabulary();
+                vocabulary.getCards().add(new Card());
+                tableOfCards.setModel(new VocaTableModel(vocabulary));
+                tableOfCards.repaint();
+            }
+        });
+        return itemNew;
+    }
+
+    private JMenuItem createOpenMenuItem() {
+        final JMenuItem itemOpen = new JMenuItem("Open...");
+        itemOpen.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_O,
+                InputEvent.CTRL_MASK));
+        itemOpen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fj.addChoosableFileFilter(new FileNameExtensionFilter("Personal Vocabular Files", "pvoc"));
+                fj.setAcceptAllFileFilterUsed(false);
+                if (fj.showDialog(MainWindow.this, "Открыть файл") == JFileChooser.APPROVE_OPTION) {
+                    file = fj.getSelectedFile();
+                    vocabulary = new VocabularyDao().getVocabular(file.toString());
+                    tableOfCards.setModel(new VocaTableModel(vocabulary));
+                }
+            }
+        });
+        return itemOpen;
+    }
+
+    private JMenuItem createSaveMenuItem() {
+        final JMenuItem itemSave = new JMenuItem("Save...");
+        itemSave.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S,
+                InputEvent.CTRL_MASK));
+        itemSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 //				if (fj.showDialog(MainWindow.this, "Сохранить файл") == JFileChooser.APPROVE_OPTION) {
-				if (fj.showSaveDialog(MainWindow.this) == JFileChooser.APPROVE_OPTION) {
-					file = fj.getSelectedFile();
-					 new VocabularyDao().saveVocabularToFile(vocabulary, file.getAbsolutePath());
-				}
-			}
-		});
-		menuFile.add(menuFileItemSave);
-		menuFile.add(new JPopupMenu.Separator());
-		menuFileItemQuit = new JMenuItem("Quit");
-		menuFileItemQuit.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q,
-				java.awt.event.InputEvent.CTRL_MASK));
-		menuFileItemQuit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		menuFile.add(menuFileItemQuit);
+                if (fj.showSaveDialog(MainWindow.this) == JFileChooser.APPROVE_OPTION) {
+                    file = fj.getSelectedFile();
+                    new VocabularyDao().saveVocabularToFile(vocabulary, file.getAbsolutePath());
+                }
+            }
+        });
+        return itemSave;
+    }
 
-		// Adding menu File to Bar menu
-		menuBar.add(menuFile);
+    private JMenuItem createQuitMenuItem() {
+        final JMenuItem itemQuit = new JMenuItem("Quit");
+        itemQuit.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q,
+                InputEvent.CTRL_MASK));
+        itemQuit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        return itemQuit;
+    }
 
-		// Creating second menu named "Views"
-		menuViews = new JMenu("Views");
-		menuViewsItemTscript = new JMenuItem("Transcript");
-		menuViewsItemTscript.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T,
-				java.awt.event.InputEvent.CTRL_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-		menuViewsItemTscript.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				transcriptPanel.setVisible(!transcriptPanel.isVisible());
-			}
-		});
-		menuViews.add(menuViewsItemTscript);
+    private JMenu createViewsMenu() {
+        final JMenu menuViews = new JMenu("Views");
+        menuViews.add(createTranscriptMenuItem());
+        return menuViews;
+    }
 
-		// Adding menu Views to Bar menu
-		menuBar.add(menuViews);
+    private JMenuItem createTranscriptMenuItem() {
+        final JMenuItem itemTranscript = new JMenuItem("Transcript");
+        itemTranscript.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_T,
+                InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+        itemTranscript.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                transcriptPanel.setVisible(!transcriptPanel.isVisible());
+            }
+        });
+        return itemTranscript;
+    }
 
-		// Adding menu bar in our main frame
-		setJMenuBar(menuBar);
+    private JScrollPane createCardsScrollPane() {
+        vocabulary = new Vocabulary();
+        tableOfCards.setModel(new VocaTableModel(vocabulary));
+        tableOfCards.setAutoCreateColumnsFromModel(true);
+        tableOfCards.addKeyListener(new KeyListener() {
 
-		// Creating and Adding Table with Vocabulary into main Frame
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
-		tableOfCards = new JTable();
-		vocabulary = new Vocabulary();
-		tableOfCards.setModel(new VocaTableModel(vocabulary));
-		tableOfCards.setAutoCreateColumnsFromModel(true);
-		scrollPaneForTableVoc = new JScrollPane(tableOfCards);
-		tableOfCards.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
 
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_INSERT) {
+                    vocabulary.getCards().add(new Card());
+                    tableOfCards.repaint();
+                }
+            }
+        });
+        tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
+        tableOfCards.setFillsViewportHeight(true);
+        return new JScrollPane(tableOfCards);
+    }
 
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
+    private TranscriptPanel createTranscriptPanel() {
+        transcriptPanel.setVisible(false);
+        transcriptPanel.addTypeIn(tableOfCards);
+        return transcriptPanel;
+    }
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == java.awt.event.KeyEvent.VK_INSERT) {
-					vocabulary.getCards().add(new Card());
-					tableOfCards.repaint();
-				}
-			}
-		});
+    private static class VocaTableModel extends AbstractTableModel {
+        protected Vocabulary tmpVocabulary;
+        private static final Map<Integer, ColumnType> index2column = ImmutableMap.<Integer, ColumnType> builder()
+                .put(0, ColumnType.WORD)
+                .put(1, ColumnType.TRANSCRIPT)
+                .put(2, ColumnType.TRANSLATION)
+                .build();
 
-		tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
-		tableOfCards.setFillsViewportHeight(true);
-		add(BorderLayout.CENTER, scrollPaneForTableVoc);
-		transcriptPanel = new TranscriptPanel();
-		transcriptPanel.setVisible(false);
-		transcriptPanel.addTypeIn(tableOfCards);
-		add(BorderLayout.NORTH, transcriptPanel);
+        public VocaTableModel(Vocabulary voc) {
+            tmpVocabulary = voc;
+        }
 
-		// frame.pack();
-		setVisible(true);
-	}
+        public Vocabulary getD() {
+            return tmpVocabulary;
+        }
 
-	private class VocaTableModel extends AbstractTableModel {
-		protected Vocabulary tmpVocabulary;
-		private String[] colNames = { "Word", "Transcript", "Translation" };
+        @Override
+        public String getColumnName(int columnIndex) {
+            return index2column.get(columnIndex).getName();
+        }
 
-		public VocaTableModel(Vocabulary voc) {
-			tmpVocabulary = voc;
-		}
+        @Override
+        public int getRowCount() {
+            return tmpVocabulary.getCards().size();
+        }
 
-		public Vocabulary getD() {
-			return tmpVocabulary;
-		}
+        @Override
+        public int getColumnCount() {
+            return index2column.size();
+        }
 
-		@Override
-		public String getColumnName(int columnIndex) {
-			if (columnIndex < 0 || columnIndex > colNames.length)
-				return "ERROR";
-			else
-				return colNames[columnIndex];
-		}
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Card bean = tmpVocabulary.getCards().get(rowIndex);
+            return index2column.get(columnIndex).getValue(bean);
+        }
 
-		@Override
-		public int getRowCount() {
-			return tmpVocabulary.getCards().size();
-		}
-
-		@Override
-		public int getColumnCount() {
-			return colNames.length;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			switch (columnIndex) {
-			case 0:
-				return tmpVocabulary.getCards().get(rowIndex).getWord().getValue();
-			case 1:
-				return tmpVocabulary.getCards().get(rowIndex).getTranscript().getValue();
-			case 2:
-				return tmpVocabulary.getCards().get(rowIndex).getTranslation().getValue();
-			default:
-				return null;
-			}
-		}
-
-		@Override
-		public Class<?> getColumnClass(int columnIndex) {
-			switch (columnIndex) {
-			case 0:
-				return Word.class;
-			case 1:
-				return Transcript.class;
-			case 2:
-				return Translation.class;
-			default:
-				return null;
-			}
-		}
-	}
-
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            return index2column.get(columnIndex).getClazz();
+        }
+    }
 }
