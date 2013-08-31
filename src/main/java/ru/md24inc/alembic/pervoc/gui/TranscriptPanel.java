@@ -1,6 +1,8 @@
 package ru.md24inc.alembic.pervoc.gui;
 
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -12,7 +14,7 @@ import javax.swing.border.Border;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
-public class TranscriptPanel extends JPanel {
+public class TranscriptPanel extends JPanel implements ComponentListener {
     private static final long serialVersionUID = -7784099290733841692L;
 
     List<Object> consonants;
@@ -124,5 +126,25 @@ public class TranscriptPanel extends JPanel {
 
     public void addTypeIn(JTable typeIn){
         this.typeIn = typeIn;
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        // noop
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+        // noop
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+        // noop
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+        // noop
     }
 }

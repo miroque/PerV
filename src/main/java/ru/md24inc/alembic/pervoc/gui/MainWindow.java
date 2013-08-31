@@ -205,11 +205,10 @@ public class MainWindow extends JFrame {
 
     private static class VocaTableModel extends AbstractTableModel {
         protected Vocabulary tmpVocabulary;
-        private static final Map<Integer, ColumnType> index2column = ImmutableMap.<Integer, ColumnType> builder()
-                .put(0, ColumnType.WORD)
-                .put(1, ColumnType.TRANSCRIPT)
-                .put(2, ColumnType.TRANSLATION)
-                .build();
+        private static final Map<Integer, ColumnType> index2column = ImmutableMap.of(
+                0, ColumnType.WORD,
+                1, ColumnType.TRANSCRIPT,
+                2, ColumnType.TRANSLATION);
 
         public VocaTableModel(Vocabulary voc) {
             tmpVocabulary = voc;
