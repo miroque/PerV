@@ -194,6 +194,14 @@ public class MainWindow extends JFrame {
         });
         tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
         tableOfCards.setFillsViewportHeight(true);
+
+        DefaultCellEditor singleClickEditor = new DefaultCellEditor(new JTextField());
+        singleClickEditor.setClickCountToStart(1);
+        //set the editor as default on every column
+        for (int i = 0; i < tableOfCards.getColumnCount(); i++) {
+            tableOfCards.setDefaultEditor(tableOfCards.getColumnClass(i), singleClickEditor);
+        }
+
         return new JScrollPane(tableOfCards);
     }
 
@@ -240,8 +248,19 @@ public class MainWindow extends JFrame {
         }
 
         @Override
+        public void setValueAt(Object value, int rowIndex, int columnIndex) {
+            Card bean = tmpVocabulary.getCards().get(rowIndex);
+            index2column.get(columnIndex).setValue(bean, value.toString());
+        }
+
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             return index2column.get(columnIndex).getClazz();
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return true;
         }
     }
 }

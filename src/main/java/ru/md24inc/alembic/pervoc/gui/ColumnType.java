@@ -11,17 +11,32 @@ public enum ColumnType {
         public String getValue(Card card) {
             return card.getWord().getValue();
         }
+
+        @Override
+        public void setValue(Card card, String value) {
+            card.getWord().setValue(value);
+        }
     },
     TRANSCRIPT(Transcript.class) {
         @Override
         public String getValue(Card card) {
             return card.getTranscript().getValue();
         }
+
+        @Override
+        public void setValue(Card card, String value) {
+            card.getTranscript().setValue(value);
+        }
     },
     TRANSLATION(Translation.class) {
         @Override
         public String getValue(Card card) {
             return card.getTranslation().getValue();
+        }
+
+        @Override
+        public void setValue(Card card, String value) {
+            card.getTranslation().setValue(value);
         }
     };
 
@@ -40,4 +55,6 @@ public enum ColumnType {
     }
 
     public abstract String getValue(Card card);
+
+    public abstract void setValue(Card card, String value);
 }
