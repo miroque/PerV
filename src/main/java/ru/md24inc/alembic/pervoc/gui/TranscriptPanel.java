@@ -53,6 +53,8 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
     }
 
     class SymbolRow extends JPanel implements MouseListener {
+        private static final int NOT_SELECTED = -1;
+
         Border fronties = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1);
 
         public SymbolRow(String h, List<Object> in, Color color) {
@@ -83,7 +85,6 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
         @Override
         public void mouseClicked(MouseEvent e) {
             JLabel ex = (JLabel) e.getComponent();
-            System.out.print(ex.getText() + " ");
             typeInActiveCell(ex);
         }
 
@@ -93,15 +94,14 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
         }
 
         private void typeInActiveCell(JLabel ex) {
-            System.out.println("Class of column: "+typeIn.getColumnClass(typeIn.getSelectedColumn()));
-            Class nc = typeIn.getColumnClass(typeIn.getSelectedColumn());
-            /*if (typeIn.isCellSelected(typeIn.getSelectedRow(), typeIn.getSelectedColumn())) {
-                System.out.println("Value at selected cell: " + typeIn.getModel().getValueAt(typeIn.getSelectedRow(), typeIn.getSelectedColumn()).toString());
-                typeIn.setValueAt(typeIn.getValueAt(typeIn.getSelectedRow(), typeIn.getSelectedColumn()).toString() + ex.getText(), typeIn.getSelectedRow(), typeIn.getSelectedColumn());
-            } else {
-                System.out.println("Sorry cell not selected");
+            if (typeIn.getSelectedRow() == NOT_SELECTED || typeIn.getSelectedColumn() == NOT_SELECTED) {
+                return;
             }
-            typeIn.repaint();*/
+            // doesn't work if the cell is currently editing.
+            typeIn.setValueAt(
+                    typeIn.getValueAt(typeIn.getSelectedRow(), typeIn.getSelectedColumn()).toString() + ex.getText(),
+                    typeIn.getSelectedRow(), typeIn.getSelectedColumn());
+            typeIn.repaint();
         }
 
         @Override
