@@ -3,6 +3,7 @@ package ru.md24inc.alembic.pervoc.gui;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -53,8 +54,6 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
     }
 
     class SymbolRow extends JPanel implements MouseListener {
-        private static final int NOT_SELECTED = -1;
-
         Border fronties = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1);
 
         public SymbolRow(String h, List<Object> in, Color color) {
@@ -94,14 +93,12 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
         }
 
         private void typeInActiveCell(JLabel ex) {
-            if (typeIn.getSelectedRow() == NOT_SELECTED || typeIn.getSelectedColumn() == NOT_SELECTED) {
+            if (!typeIn.isEditing()) {
                 return;
             }
-            // doesn't work if the cell is currently editing.
-            typeIn.setValueAt(
-                    typeIn.getValueAt(typeIn.getSelectedRow(), typeIn.getSelectedColumn()).toString() + ex.getText(),
-                    typeIn.getSelectedRow(), typeIn.getSelectedColumn());
-            typeIn.repaint();
+            typeIn.dispatchEvent(new KeyEvent(
+                    typeIn.getEditorComponent(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0,
+                    KeyEvent.VK_UNDEFINED, ex.getText().charAt(0)));
         }
 
         @Override
