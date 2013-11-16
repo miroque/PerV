@@ -15,7 +15,7 @@ import javax.swing.border.Border;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
-public class TranscriptPanel extends JPanel implements ComponentListener {
+public class TranscriptPanel extends JPanel {
     private static final long serialVersionUID = -7784099290733841692L;
 
     List<Object> consonants;
@@ -83,8 +83,8 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JLabel ex = (JLabel) e.getComponent();
-            typeInActiveCell(ex);
+//            JLabel ex = (JLabel) e.getComponent();
+//            typeInActiveCell(ex);
         }
 
         @Override
@@ -93,12 +93,12 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
         }
 
         private void typeInActiveCell(JLabel ex) {
-            if (!typeIn.isEditing()) {
-                return;
-            }
-            typeIn.dispatchEvent(new KeyEvent(
-                    typeIn.getEditorComponent(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0,
-                    KeyEvent.VK_UNDEFINED, ex.getText().charAt(0)));
+//            if (!typeIn.isEditing()) {
+//                return;
+//            }
+//            typeIn.dispatchEvent(new KeyEvent(
+//                    typeIn.getEditorComponent(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0,
+//                    KeyEvent.VK_UNDEFINED, ex.getText().charAt(0)));
         }
 
         @Override
@@ -123,25 +123,5 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
 
     public void addTypeIn(JTable typeIn){
         this.typeIn = typeIn;
-    }
-
-    @Override
-    public void componentResized(ComponentEvent e) {
-        // noop
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e) {
-        // noop
-    }
-
-    @Override
-    public void componentShown(ComponentEvent e) {
-        // noop
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent e) {
-        // noop
     }
 }

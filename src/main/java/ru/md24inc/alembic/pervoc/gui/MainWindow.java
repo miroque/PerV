@@ -9,6 +9,8 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -92,6 +94,7 @@ public class MainWindow extends JFrame {
                 vocabulary = new Vocabulary();
                 vocabulary.getCards().add(new Card());
                 tableOfCards.setModel(new VocaTableModel(vocabulary));
+                setTranscriptEditor();
                 tableOfCards.repaint();
             }
         });
@@ -112,6 +115,7 @@ public class MainWindow extends JFrame {
                     file = fj.getSelectedFile();
                     vocabulary = new VocabularyDao().getVocabular(file.toString());
                     tableOfCards.setModel(new VocaTableModel(vocabulary));
+                    setTranscriptEditor();
                 }
             }
         });
@@ -174,6 +178,7 @@ public class MainWindow extends JFrame {
         vocabulary = new Vocabulary();
         tableOfCards.setModel(new VocaTableModel(vocabulary));
         tableOfCards.setAutoCreateColumnsFromModel(true);
+        setTranscriptEditor();
         tableOfCards.addKeyListener(new KeyListener() {
 
             @Override
@@ -192,18 +197,23 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
+//        tableOfCards.addComponentListener((ComponentListener) transcriptPanel);
         tableOfCards.setFillsViewportHeight(true);
 
-        DefaultCellEditor singleClickEditor = new DefaultCellEditor(new JTextField());
-        singleClickEditor.setClickCountToStart(1);
-        //set the editor as default on every column
-        for (int i = 0; i < tableOfCards.getColumnCount(); i++) {
-            tableOfCards.setDefaultEditor(tableOfCards.getColumnClass(i), singleClickEditor);
-        }
+//        DefaultCellEditor singleClickEditor = new DefaultCellEditor(new JTextField());
+//        singleClickEditor.setClickCountToStart(1);
+//        //set the editor as default on every column
+//        for (int i = 0; i < tableOfCards.getColumnCount(); i++) {
+//            tableOfCards.setDefaultEditor(tableOfCards.getColumnClass(i), singleClickEditor);
+//        }
 
         return new JScrollPane(tableOfCards);
     }
+
+	private void setTranscriptEditor() {
+		TableColumn transcriptColumn = tableOfCards.getColumnModel().getColumn(1);
+        transcriptColumn.setCellEditor(new TranscriptEditor());
+	}
 
     private TranscriptPanel createTranscriptPanel() {
         transcriptPanel.setVisible(false);
@@ -220,10 +230,6 @@ public class MainWindow extends JFrame {
 
         public VocaTableModel(Vocabulary voc) {
             tmpVocabulary = voc;
-        }
-
-        public Vocabulary getD() {
-            return tmpVocabulary;
         }
 
         @Override
