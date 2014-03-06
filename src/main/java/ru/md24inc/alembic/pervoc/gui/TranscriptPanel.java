@@ -96,9 +96,11 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
             if (!typeIn.isEditing()) {
                 return;
             }
-            typeIn.dispatchEvent(new KeyEvent(
-                    typeIn.getEditorComponent(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0,
-                    KeyEvent.VK_UNDEFINED, ex.getText().charAt(0)));
+            for (char c : ex.getText().toCharArray()) {
+                typeIn.dispatchEvent(new KeyEvent(
+                        typeIn.getEditorComponent(), KeyEvent.KEY_TYPED, System.currentTimeMillis(), 0,
+                        KeyEvent.VK_UNDEFINED, c));
+            }
         }
 
         @Override
