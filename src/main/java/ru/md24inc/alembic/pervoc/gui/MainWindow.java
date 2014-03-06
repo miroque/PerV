@@ -174,15 +174,7 @@ public class MainWindow extends JFrame {
         vocabulary = new Vocabulary();
         tableOfCards.setModel(new VocaTableModel(vocabulary));
         tableOfCards.setAutoCreateColumnsFromModel(true);
-        tableOfCards.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
+        tableOfCards.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(KeyEvent e) {
