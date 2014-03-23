@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
@@ -21,6 +22,9 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
     List<Object> consonants;
     List<Object> vowels;
     List<Object> special;
+    List<Object> consonantsHints;
+    List<Object> vowelsHints;
+    List<Object> specialHints;
     Border border;
     JTable typeIn;
 
@@ -35,28 +39,32 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
         setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         border = BorderFactory.createLineBorder(Color.lightGray, 1);
         // Reading xml file with phonetic symbols
+        AbstractConfiguration.setDefaultListDelimiter('\u0000');
         XMLConfiguration mxconf = null;
         try {
             mxconf = new XMLConfiguration(new File("src/main/resources/symbols.xml"));
         } catch (ConfigurationException e) {
-            System.out.println("Reading config failed due: " + e.getMessage());
+            e.printStackTrace();
         }
         // Fill up collection variables with needed symbols
         consonants = mxconf.getList("Consonants.symbol");
         vowels = mxconf.getList("Vowels.symbol");
         special = mxconf.getList("Special.symbol");
+        consonantsHints = mxconf.getList("Consonants.symbol[@hint]");
+        vowelsHints = mxconf.getList("Vowels.symbol[@hint]");
+        specialHints = mxconf.getList("Special.symbol[@hint]");
 
-        add(new SymbolRow("Consonants", consonants, new Color(0, 0, 150)));
+        add(new SymbolRow("Consonants", consonants, consonantsHints, new Color(0, 0, 150)));
         add(Box.createRigidArea(new Dimension(0, 10)));
-        add(new SymbolRow("Vowels", vowels, new Color(150, 0, 0)));
+        add(new SymbolRow("Vowels", vowels, vowelsHints, new Color(150, 0, 0)));
         add(Box.createRigidArea(new Dimension(0, 10)));
-        add(new SymbolRow("Special", special, new Color(93, 62, 0)));
+        add(new SymbolRow("Special", special, specialHints, new Color(93, 62, 0)));
     }
 
     class SymbolRow extends JPanel implements MouseListener {
         Border fronties = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1);
 
-        public SymbolRow(String h, List<Object> in, Color color) {
+        public SymbolRow(String h, List<Object> symbols, List<Object> hints, Color color) {
             setLayout(new BorderLayout(5, 5));
 
             JPanel headerPanel = new JPanel();
@@ -64,17 +72,18 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
             add(headerPanel, BorderLayout.WEST);
 
             JPanel symbolsPanel = new JPanel(new GridLayout(0, 10, 2, 2));
-            for (Object ob : in) {
-                symbolsPanel.add(createSymbolLabel(ob, color));
+            int lenthOfSymbols = symbols.size();
+            for (int i = 0; i < lenthOfSymbols; i++) {
+                symbolsPanel.add(createSymbolLabel(symbols.get(i), hints.get(i), color));
             }
             add(symbolsPanel, BorderLayout.CENTER);
         }
 
-        private JLabel createSymbolLabel(Object ob, Color color) {
-            JLabel symbolsHolder = new JLabel(ob.toString());
+        private JLabel createSymbolLabel(Object symbol, Object hint, Color color) {
+            JLabel symbolsHolder = new JLabel(symbol.toString());
             symbolsHolder.setBorder(fronties);
             symbolsHolder.setForeground(color);
-            symbolsHolder.setToolTipText("Here will be hint");
+            symbolsHolder.setToolTipText(hint.toString());
             symbolsHolder.addMouseListener(this);
             symbolsHolder.setHorizontalAlignment(JLabel.CENTER);
             symbolsHolder.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
@@ -123,7 +132,7 @@ public class TranscriptPanel extends JPanel implements ComponentListener {
 
     }
 
-    public void addTypeIn(JTable typeIn){
+    public void addTypeIn(JTable typeIn) {
         this.typeIn = typeIn;
     }
 
